@@ -20,4 +20,4 @@ dist-ssr
 *.sln
 *.sw?
 firebase-config.ts
-
+src/firebase-config.ts
