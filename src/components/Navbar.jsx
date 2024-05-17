@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Providers, auth } from './../firebase'
+import { auth, Providers } from '.././firebase'; // Adjust the import path as necessary
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import './Navbar.css';
 
@@ -15,12 +15,37 @@ const Navbar = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleSignIn = () => {
+  const handleGoogleSignIn = () => {
     signInWithPopup(auth, Providers.google)
-      .then((result) => {
-        console.log('User signed in:', result.user);
-      }).catch((error) => {
-        console.error('Error signing in with Google:', error.message);
+      .then(async (result) => {
+        const user = result.user;
+        console.log('User signed in:', user);
+
+        const idToken = await user.getIdToken();
+        console.log('Firebase ID token:', idToken);
+
+        // Combine the Zoom token generation step with the Google sign-in
+        fetch('http://localhost:5000/get_zoom_token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Zoom token process initiated:', data);
+            const accessToken = data.access_token;
+
+            // Handle the received access token as needed
+            console.log('Zoom access token received:', accessToken);
+            // You can store this token in state or context if needed
+          })
+          .catch((error) => {
+            console.error('Error obtaining Zoom token:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error signing in with Google:', error);
       });
   };
 
@@ -28,21 +53,25 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out successfully');
-      }).catch((error) => {
-        console.error('Error signing out:', error.message);
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
       });
   };
 
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
       <div>
-        <Link to="/">Home</Link> | <Link to="/create-meeting">Create Meeting</Link> | <Link to="/meeting-details">Meeting Details</Link> | <Link to="/doctor-session">Doctor Session</Link> | <Link to="/group-class">Group Class</Link>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/consultation">Consultation</Link>
       </div>
       <div>
         {user ? (
-          <button onClick={handleSignOut}>Sign Out</button>
+          <div>
+            <span>{user.displayName}</span>
+            <button onClick={handleSignOut}>Sign Out</button>
+          </div>
         ) : (
-          <button onClick={handleSignIn}>Sign In with Google</button>
+          <button onClick={handleGoogleSignIn}>Sign In with Google</button>
         )}
       </div>
     </nav>
