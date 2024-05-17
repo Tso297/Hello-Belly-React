@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth, Providers } from './firebase';
+import { Providers, auth } from './../firebase'
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import './Navbar.css';
 
@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
       <div>
-        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/consultation">Consultation</Link>
+        <Link to="/">Home</Link> | <Link to="/create-meeting">Create Meeting</Link> | <Link to="/meeting-details">Meeting Details</Link> | <Link to="/doctor-session">Doctor Session</Link> | <Link to="/group-class">Group Class</Link>
       </div>
       <div>
         {user ? (
