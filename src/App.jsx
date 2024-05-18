@@ -20,7 +20,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create-meeting" element={<CreateMeeting onMeetingCreated={handleMeetingCreated} />} />
+          <Route path="/create_meeting" element={<CreateMeeting onMeetingCreated={handleMeetingCreated} />} />
           <Route path="/meeting-details" element={<MeetingDetails meeting={meeting} />} />
           <Route path="/doctor-session" element={<DoctorPatientSession 
             meetingNumber={meeting?.id} 
