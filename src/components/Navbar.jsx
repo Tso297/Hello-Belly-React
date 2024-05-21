@@ -1,94 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, Providers } from '../firebase'; // Adjust the import path as necessary
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import './Navbar.css';
+import { useZoom } from './ZoomContext'; // Adjust the import path as necessary
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  const [zoomAccessToken, setZoomAccessToken] = useState(localStorage.getItem('zoomAccessToken'));
+  const { user, zoomAccessToken, handleGoogleSignIn, handleSignOut } = useZoom();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
       if (currentUser) {
-        fetchZoomToken();
+        console.log('User signed in:', currentUser);
       }
     });
 
     return () => unsubscribe();
   }, []);
 
-  const fetchZoomToken = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/get_zoom_token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      const accessToken = data.access_token;
-
-      if (accessToken) {
-        setZoomAccessToken(accessToken);
-        localStorage.setItem('zoomAccessToken', accessToken);
-        console.log('Zoom access token received:', accessToken);
-      } else {
-        console.error('Failed to fetch Zoom access token');
-      }
-    } catch (error) {
-      console.error('Error obtaining Zoom token:', error);
-    }
-  };
-
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, Providers.google)
-      .then(async (result) => {
-        console.log('User signed in:', result.user);
-      })
-      .catch((error) => {
-        console.error('Error signing in with Google:', error);
-      });
-  };
-
-  async function handleCreateMeeting() {
-    try {
-        const response = await fetch('http://localhost:5000/api/create_meeting', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${zoomAccessToken}`
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                topic: 'New Meeting',
-                start_time: '2024-05-17T10:00:00Z',  // Example start time
-                duration: 30
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to create meeting');
-        }
-
-        const data = await response.json();
-        console.log('Meeting created:', data);
-    } catch (error) {
-        console.error('Error creating meeting:', error);
-    }
-}
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log('User signed out successfully');
-        setZoomAccessToken(null);
-        localStorage.removeItem('zoomAccessToken');
-      })
-      .catch((error) => {
-        console.error('Error signing out:', error);
-      });
+  const handleCreateMeeting = () => {
+    navigate('/create_meeting', { state: { accessToken: zoomAccessToken } });
   };
 
   return (
