@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, Providers } from '../firebase'; // Adjust the import path as necessary
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 
-const ZoomContext = createContext();
+export const ZoomContext = createContext();
 
 export const ZoomProvider = ({ children }) => {
   const [user, setUser] = useState(null);
