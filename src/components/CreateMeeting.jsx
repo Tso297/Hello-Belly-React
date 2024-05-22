@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 
 const CreateMeeting = ({ onMeetingCreated }) => {
   const location = useLocation();
-  const accessToken = location.state?.accessToken;
   const [topic, setTopic] = useState('');
   const [startTime, setStartTime] = useState('');
   const [duration, setDuration] = useState(30);
@@ -21,7 +20,6 @@ const CreateMeeting = ({ onMeetingCreated }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           topic,
