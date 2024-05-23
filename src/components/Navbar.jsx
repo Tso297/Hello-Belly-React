@@ -27,7 +27,7 @@ const Navbar = () => {
   }, [zoomAccessToken]);
 
   const handleCreateMeeting = () => {
-    navigate('/create_meeting', { state: { accessToken: zoomAccessToken } });
+    navigate('/schedule', { state: { accessToken: zoomAccessToken } });
   };
 
   const handleSignInWithZoom = () => {
@@ -37,13 +37,16 @@ const Navbar = () => {
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
       <div>
-        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/create_meeting">Consultation</Link>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
+        {user && user.email === 'torcsh30@gmail.com' && (
+          <> | <Link to="/doctor_dashboard">Doctor Dashboard</Link></>
+        )}
       </div>
       <div>
         {user ? (
           <div>
             <span>{user.displayName}</span>
-            <button onClick={handleCreateMeeting}>Create Meeting</button>
+            <button onClick={handleCreateMeeting}>Schedule a Meeting</button>
             <button onClick={handleSignOut}>Sign Out</button>
           </div>
         ) : (
