@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-const CreateMeeting = () => {
+const CreateMeeting = ({ onMeetingCreated }) => {
     const [topic, setTopic] = useState('');
     const [startTime, setStartTime] = useState('');
     const [duration, setDuration] = useState(30);
     const [accessToken, setAccessToken] = useState('');
 
     useEffect(() => {
-        // Fetch the access token from your auth logic or local storage
         const token = localStorage.getItem('zoomAccessToken');
-        setAccessToken(token);
+        if (token) {
+            console.log('Access token loaded from local storage:', token);
+            setAccessToken(token);
+        } else {
+            console.error('No access token found in local storage');
+        }
     }, []);
 
     const handleSubmit = async (event) => {
@@ -26,6 +30,7 @@ const CreateMeeting = () => {
         };
 
         try {
+            console.log('Sending meeting creation request with data:', meetingData);
             const response = await fetch('http://localhost:5000/api/create_meeting', {
                 method: 'POST',
                 headers: {
@@ -36,10 +41,11 @@ const CreateMeeting = () => {
             });
 
             if (!response.ok) {
-                throw new Error(`Network response was not ok ${response.statusText}`);
+                throw new Error(`Network response was not ok: ${response.statusText}`);
             }
 
             const data = await response.json();
+            onMeetingCreated(data);
             console.log('Meeting created successfully:', data);
         } catch (error) {
             console.error('Error creating meeting:', error);

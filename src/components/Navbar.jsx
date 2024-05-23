@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, Providers } from '../firebase'; // Adjust the import path as necessary
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import './Navbar.css';
-import { useZoom } from './ZoomContext'; // Adjust the import path as necessary
+import { useZoom } from './ZoomContext';
 
 const Navbar = () => {
   const { user, zoomAccessToken, handleGoogleSignIn, handleSignOut } = useZoom();
@@ -19,8 +19,19 @@ const Navbar = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (zoomAccessToken) {
+      console.log('Zoom access token updated:', zoomAccessToken);
+      localStorage.setItem('zoomAccessToken', zoomAccessToken);
+    }
+  }, [zoomAccessToken]);
+
   const handleCreateMeeting = () => {
     navigate('/create_meeting', { state: { accessToken: zoomAccessToken } });
+  };
+
+  const handleSignInWithZoom = () => {
+    window.location.href = '/login'; // Adjust as needed to hit your login endpoint
   };
 
   return (
