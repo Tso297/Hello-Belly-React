@@ -116,6 +116,7 @@ const MeetingScheduler = () => {
             dateFormat="MMMM d, yyyy h:mm aa"
             minTime={minTime}
             maxTime={maxTime}
+            minDate={new Date()}  // Prevent selecting past dates
             inline
           />
         </div>
@@ -152,7 +153,10 @@ const MeetingScheduler = () => {
           </li>
         ))}
       </ul>
-      <button onClick={handleSignOut}>Sign Out</button> {/* Add a sign-out button */}
+      <button onClick={() => {
+        handleSignOut();
+        setAppointments([]);  // Clear appointments on sign-out
+      }}>Sign Out</button> {/* Add a sign-out button */}
     </div>
   );
 };
