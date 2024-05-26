@@ -10,7 +10,7 @@ const AdminOnboard = () => {
     const doctorData = { name, email };
 
     try {
-      const response = await fetch('http://localhost:5000/api/doctors', {
+      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/doctors', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
