@@ -59,7 +59,8 @@ const MeetingScheduler = () => {
         },
       });
       const data = await response.json();
-      setAvailableSlots(data.available_slots);
+      const availableDates = data.available_slots.map(slot => new Date(slot));
+      setAvailableSlots(availableDates);
     } catch (error) {
       console.error('Error fetching available slots:', error);
       setAvailableSlots([]);
@@ -77,8 +78,8 @@ const MeetingScheduler = () => {
     };
 
     const url = editingAppointment
-      ? `http://localhost:5000/api/appointments/${editingAppointment.id}?email=${user.email}`
-      : `http://localhost:5000/api/schedule_meeting?email=${user.email}`;
+      ? `http://localhost:5000/api/appointments/${editingAppointment.id}`
+      : `http://localhost:5000/api/schedule_meeting`;
     const method = editingAppointment ? 'PUT' : 'POST';
 
     try {
@@ -124,7 +125,7 @@ const MeetingScheduler = () => {
 
   const handleCancel = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/appointments/${id}?email=${user.email}`, {
+      const response = await fetch(`http://localhost:5000/api/appointments/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -144,31 +145,36 @@ const MeetingScheduler = () => {
 
   const handleReschedule = async (id) => {
     if (!selectedDate) {
-      alert('Please select a new date and time for rescheduling');
-      return;
+        alert('Please select a new date and time for rescheduling');
+        return;
     }
+
+    const meetingData = {
+        date: selectedDate.toISOString(),  // Ensure the correct date is sent
+    };
 
     try {
-      const response = await fetch(`http://localhost:5000/api/appointments/${id}?email=${user.email}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ date: selectedDate.toISOString() }),
-      });
+        const response = await fetch(`http://localhost:5000/api/appointments/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(meetingData),
+        });
 
-      if (response.ok) {
-        alert('Meeting rescheduled successfully!');
-        setSelectedDate(null);
-        setRescheduleAppointmentId(null);
-        fetchAppointments(user.email);
-      } else {
-        alert('Error rescheduling meeting');
-      }
+        if (response.ok) {
+            alert('Meeting rescheduled successfully!');
+            setSelectedDate(null);
+            setRescheduleAppointmentId(null);
+            fetchAppointments(user.email);
+        } else {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error}`);
+        }
     } catch (error) {
-      console.error('Error rescheduling meeting:', error);
+        console.error('Error rescheduling meeting:', error);
     }
-  };
+};
 
   const handleEdit = (appointment) => {
     setEditingAppointment(appointment);
@@ -178,19 +184,11 @@ const MeetingScheduler = () => {
   };
 
   const minTime = new Date();
-  minTime.setHours(9, 0);
+  minTime.setHours(9, 0, 0, 0);
+  minTime.setMinutes(0);
   const maxTime = new Date();
-  maxTime.setHours(17, 0); // Allow scheduling a 30-minute appointment at 5 PM
-
-  // Convert appointment dates to milliseconds
-  const appointmentDates = appointments.map(appointment => new Date(appointment.date).getTime());
-
-  // Filter out appointment slots from available slots
-  const includeTimes = availableSlots.filter(
-    slot => !appointmentDates.includes(new Date(slot).getTime())
-  );
-
-  console.log('Final Include Times:', includeTimes);
+  maxTime.setHours(17, 0, 0, 0); // Allow scheduling a 30-minute appointment at 5 PM
+  maxTime.setMinutes(0);
 
   return (
     <div>
@@ -230,7 +228,7 @@ const MeetingScheduler = () => {
                 minTime={minTime}
                 maxTime={maxTime}
                 minDate={new Date()}
-                includeTimes={includeTimes.map(time => new Date(time))}
+                includeTimes={availableSlots}
               />
             </>
           )}
@@ -262,7 +260,7 @@ const MeetingScheduler = () => {
                     minTime={minTime}
                     maxTime={maxTime}
                     minDate={new Date()}
-                    includeTimes={includeTimes.map(time => new Date(time))}
+                    includeTimes={availableSlots}
                   />
                   <button onClick={() => handleReschedule(appointment.id)}>Confirm Reschedule</button>
                 </div>
