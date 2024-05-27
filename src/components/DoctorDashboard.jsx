@@ -18,7 +18,7 @@ const DoctorDashboard = () => {
   const fetchDoctorAppointments = async (doctorId) => {
     console.log('Fetching appointments for doctor ID:', doctorId);
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/doctor_appointments?doctor_id=${doctorId}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/doctor_appointments?doctor_id=${doctorId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const DoctorDashboard = () => {
 
   const handleCancel = async (id) => {
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}?email=${user.email}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}?email=${user.email}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const DoctorDashboard = () => {
     }
 
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}?email=${user.email}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}?email=${user.email}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -88,9 +88,9 @@ const DoctorDashboard = () => {
   };
 
   const minTime = new Date();
-  minTime.setHours(9, 0);
+  minTime.setHours(9, 0, 0, 0);
   const maxTime = new Date();
-  maxTime.setHours(17, 0);
+  maxTime.setHours(17, 0, 0, 0);
 
   return (
     <div>

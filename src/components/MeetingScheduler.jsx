@@ -22,7 +22,7 @@ const MeetingScheduler = () => {
 
   const fetchAppointments = async (email) => {
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments?email=${email}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments?email=${email}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const MeetingScheduler = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/doctors', {
+      const response = await fetch('http://127.0.0.1:5000/api/doctors', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const MeetingScheduler = () => {
 
   const fetchAvailableSlots = async (doctorId, date) => {
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -78,8 +78,8 @@ const MeetingScheduler = () => {
     };
 
     const url = editingAppointment
-      ? `https://hello-belly-flask-1.onrender.com/api/appointments/${editingAppointment.id}`
-      : `https://hello-belly-flask-1.onrender.com/api/schedule_meeting`;
+      ? `http://127.0.0.1:5000/api/appointments/${editingAppointment.id}`
+      : `http://127.0.0.1:5000/api/schedule_meeting`;
     const method = editingAppointment ? 'PUT' : 'POST';
 
     try {
@@ -125,7 +125,7 @@ const MeetingScheduler = () => {
 
   const handleCancel = async (id) => {
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -153,8 +153,10 @@ const MeetingScheduler = () => {
         date: selectedDate.toISOString(),  // Ensure the correct date is sent
     };
 
+    console.log('Rescheduling meeting with data:', meetingData);
+
     try {
-        const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
+        const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
