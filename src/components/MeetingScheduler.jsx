@@ -150,7 +150,7 @@ const MeetingScheduler = () => {
     }
 
     const meetingData = {
-        date: selectedDate.toISOString(),  // Ensure the correct date is sent
+        date: selectedDate.toISOString(),
     };
 
     console.log('Rescheduling meeting with data:', meetingData);
@@ -176,7 +176,7 @@ const MeetingScheduler = () => {
     } catch (error) {
         console.error('Error rescheduling meeting:', error);
     }
-};
+  };
 
   const handleEdit = (appointment) => {
     setEditingAppointment(appointment);
@@ -189,8 +189,7 @@ const MeetingScheduler = () => {
   minTime.setHours(9, 0, 0, 0);
   minTime.setMinutes(0);
   const maxTime = new Date();
-  maxTime.setHours(17, 0, 0, 0); // Allow scheduling a 30-minute appointment at 5 PM
-  maxTime.setMinutes(0);
+  maxTime.setHours(17, 0, 0, 0);
 
   return (
     <div>
