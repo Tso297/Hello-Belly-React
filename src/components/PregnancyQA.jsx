@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import { useZoom } from './ZoomContext';
 
 const PregnancyQA = () => {
-  const { user, handleSignOut, doctorId } = useZoom();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [videos, setVideos] = useState([]);
   const [sidebarVideos, setSidebarVideos] = useState([]);
 
   useEffect(() => {
-    // Fetch general pregnancy-related videos for the sidebar
     const fetchSidebarVideos = async () => {
       try {
         const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips', {
@@ -36,7 +31,6 @@ const PregnancyQA = () => {
 
   const handleAskQuestion = async () => {
     try {
-      // Call ChatGPT API
       const response = await fetch('https://hello-belly-flask-1.onrender.com/api/chatgpt', {
         method: 'POST',
         headers: {
@@ -47,8 +41,12 @@ const PregnancyQA = () => {
       const data = await response.json();
       setAnswer(data.answer);
 
-      // Call YouTube API
-      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
+      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const videoData = await videoResponse.json();
       setVideos(videoData.videos);
     } catch (error) {
