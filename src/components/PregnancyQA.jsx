@@ -14,7 +14,7 @@ const PregnancyQA = () => {
     // Fetch general pregnancy-related videos for the sidebar
     const fetchSidebarVideos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/youtube?query=pregnancy tips', {
+        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const PregnancyQA = () => {
   const handleAskQuestion = async () => {
     try {
       // Call ChatGPT API
-      const response = await fetch('http://127.0.0.1:5000/api/chatgpt', {
+      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/chatgpt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const PregnancyQA = () => {
       setAnswer(data.answer);
 
       // Call YouTube API
-      const videoResponse = await fetch(`http://127.0.0.1:5000/api/youtube?query=${question}`);
+      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
       const videoData = await videoResponse.json();
       setVideos(videoData.videos);
     } catch (error) {
