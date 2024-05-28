@@ -54,7 +54,7 @@ const DoctorDashboard = () => {
         },
       });
       const data = await response.json();
-      const availableDates = data.available_slots.map(slot => new Date(slot));
+      const availableDates = data.available_slots.map(slot => new Date(new Date(slot).getTime() + 4 * 60 * 60 * 1000));
       setAvailableSlots(availableDates);
     } catch (error) {
       console.error('Error fetching available slots:', error);
@@ -149,6 +149,40 @@ const DoctorDashboard = () => {
     }
   };
 
+  const handleRescheduleTimeOff = async (id) => {
+    if (!timeOffStartDate || !timeOffEndDate) {
+      alert('Please select new start and end dates for rescheduling');
+      return;
+    }
+
+    const timeOffData = {
+      date: timeOffStartDate.toISOString(),
+      end_date: timeOffEndDate.toISOString()
+    };
+
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}?email=${user.email}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(timeOffData),
+      });
+
+      if (response.ok) {
+        alert('Time off rescheduled successfully!');
+        setTimeOffStartDate(null);
+        setTimeOffEndDate(null);
+        setRescheduleAppointmentId(null);
+        fetchDoctorAppointmentsAndTimeOffs(doctorId);
+      } else {
+        alert('Error rescheduling time off');
+      }
+    } catch (error) {
+      console.error('Error rescheduling time off:', error);
+    }
+  };
+
   const handleRescheduleClick = (id) => {
     setRescheduleAppointmentId(id);
   };
@@ -160,6 +194,7 @@ const DoctorDashboard = () => {
 
   const minTime = new Date();
   minTime.setHours(9, 0, 0, 0);
+
   const maxTime = new Date();
   maxTime.setHours(17, 0, 0, 0);
 
@@ -213,6 +248,38 @@ const DoctorDashboard = () => {
               <p>Purpose: {timeOff.purpose}</p>
               <button onClick={() => handleCancel(timeOff.id)}>Cancel</button>
               <button onClick={() => handleRescheduleClick(timeOff.id)}>Reschedule</button>
+              {rescheduleAppointmentId === timeOff.id && (
+                <div>
+                  <label>Reschedule Start Date and Time:</label>
+                  <DatePicker
+                    selected={timeOffStartDate}
+                    onChange={handleDateChange}
+                    showTimeSelect
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    minTime={minTime}
+                    maxTime={maxTime}
+                    minDate={new Date()}
+                    includeTimes={availableSlots}
+                  />
+                  <br />
+                  <label>Reschedule End Date and Time:</label>
+                  <DatePicker
+                    selected={timeOffEndDate}
+                    onChange={(date) => setTimeOffEndDate(date)}
+                    showTimeSelect
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    minTime={minTime}
+                    maxTime={maxTime}
+                    minDate={new Date()}
+                    includeTimes={availableSlots}
+                  />
+                  <button onClick={() => handleRescheduleTimeOff(timeOff.id)}>Confirm Reschedule</button>
+                </div>
+              )}
             </li>
           ))}
         </ul>
