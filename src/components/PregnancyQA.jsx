@@ -8,14 +8,11 @@ const PregnancyQA = () => {
 
   useEffect(() => {
     const fetchSidebarVideos = async () => {
+      console.log('Fetching sidebar videos for pregnancy tips');
       try {
-        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips');
         const data = await response.json();
+        console.log('Sidebar videos fetched successfully:', data);
         setSidebarVideos(data.videos);
       } catch (error) {
         console.error('Error fetching sidebar videos:', error);
@@ -30,6 +27,7 @@ const PregnancyQA = () => {
   };
 
   const handleAskQuestion = async () => {
+    console.log('Asking question:', question);
     try {
       const response = await fetch('https://hello-belly-flask-1.onrender.com/api/chatgpt', {
         method: 'POST',
@@ -39,15 +37,13 @@ const PregnancyQA = () => {
         body: JSON.stringify({ question }),
       });
       const data = await response.json();
+      console.log('Received answer:', data);
       setAnswer(data.answer);
 
-      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      console.log('Fetching relevant YouTube videos for question:', question);
+      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
       const videoData = await videoResponse.json();
+      console.log('Relevant videos fetched successfully:', videoData);
       setVideos(videoData.videos);
     } catch (error) {
       console.error('Error asking question:', error);
