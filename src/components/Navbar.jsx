@@ -26,7 +26,7 @@ const Navbar = () => {
     return (
         <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
             <div>
-                <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/FAQ">FAQ</Link>
+                <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/FAQ">FAQ</Link> | <Link to="/Classes">Classes</Link> | <Link to="/AddClasses">Add Classes</Link>
                 {user && user.email === 'torcsh30@gmail.com' && (
                     <> | <Link to="/admin/onboard">Onboard Doctor</Link></>
                 )}

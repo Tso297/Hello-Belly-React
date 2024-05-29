@@ -6,6 +6,8 @@ import DoctorDashboard from './components/DoctorDashboard';
 import MeetingScheduler from './components/MeetingScheduler';
 import AdminOnboard from './components/AdminOnboard';
 import PregnancyQA from './components/PregnancyQA';
+import ClassCalendar from './components/ClassCalendar';
+import AddClassForm from './components/AddClassForm';
 
 
 function App() {
@@ -21,7 +23,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="FAQ" element={<PregnancyQA />} />
+          <Route path="/Classes" element={<ClassCalendar />} />
+          <Route path="/AddClasses" element={<AddClassForm />} />
+          <Route path="/FAQ" element={<PregnancyQA />} />
           <Route path="/admin/onboard" element={<AdminOnboard />} />
           <Route path="/schedule" element={<MeetingScheduler />} />
           <Route path="/doctor_dashboard" element={<DoctorDashboard />} />

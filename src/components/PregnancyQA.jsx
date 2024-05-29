@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useZoom } from './ZoomContext';
 
 const PregnancyQA = () => {
+  const { user } = useZoom();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [videos, setVideos] = useState([]);
@@ -8,11 +10,9 @@ const PregnancyQA = () => {
 
   useEffect(() => {
     const fetchSidebarVideos = async () => {
-      console.log('Fetching sidebar videos for pregnancy tips');
       try {
-        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips');
+        const response = await fetch('http://127.0.0.1:5000/api/youtube?query=pregnancy tips');
         const data = await response.json();
-        console.log('Sidebar videos fetched successfully:', data);
         setSidebarVideos(data.videos);
       } catch (error) {
         console.error('Error fetching sidebar videos:', error);
@@ -27,28 +27,35 @@ const PregnancyQA = () => {
   };
 
   const handleAskQuestion = async () => {
-    console.log('Asking question:', question);
     try {
-      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/chatgpt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ question }),
-      });
-      const data = await response.json();
-      console.log('Received answer:', data);
-      setAnswer(data.answer);
+        const response = await fetch('http://127.0.0.1:5000/api/chatgpt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question }),
+        });
 
-      console.log('Fetching relevant YouTube videos for question:', question);
-      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
-      const videoData = await videoResponse.json();
-      console.log('Relevant videos fetched successfully:', videoData);
-      setVideos(videoData.videos);
+        if (response.ok) {
+            const data = await response.json();
+            setAnswer(data.answer);
+
+            // Log headers
+            for (let [key, value] of response.headers.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+
+            const videoResponse = await fetch(`http://127.0.0.1:5000/api/youtube?query=${question}`);
+            const videoData = await videoResponse.json();
+            setVideos(videoData.videos);
+        } else {
+            const errorData = await response.json();
+            console.error('Error fetching answer:', errorData);
+        }
     } catch (error) {
-      console.error('Error asking question:', error);
+        console.error('Error asking question:', error);
     }
-  };
+};
 
   return (
     <div>
