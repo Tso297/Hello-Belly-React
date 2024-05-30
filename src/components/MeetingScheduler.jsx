@@ -145,36 +145,36 @@ const MeetingScheduler = () => {
 
   const handleReschedule = async (id) => {
     if (!selectedDate) {
-        alert('Please select a new date and time for rescheduling');
-        return;
+      alert('Please select a new date and time for rescheduling');
+      return;
     }
 
     const meetingData = {
-        date: selectedDate.toISOString(),
+      date: selectedDate.toISOString(),
     };
 
     console.log('Rescheduling meeting with data:', meetingData);
 
     try {
-        const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(meetingData),
-        });
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meetingData),
+      });
 
-        if (response.ok) {
-            alert('Meeting rescheduled successfully!');
-            setSelectedDate(null);
-            setRescheduleAppointmentId(null);
-            fetchAppointments(user.email);
-        } else {
-            const errorData = await response.json();
-            alert(`Error: ${errorData.error}`);
-        }
+      if (response.ok) {
+        alert('Meeting rescheduled successfully!');
+        setSelectedDate(null);
+        setRescheduleAppointmentId(null);
+        fetchAppointments(user.email);
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
     } catch (error) {
-        console.error('Error rescheduling meeting:', error);
+      console.error('Error rescheduling meeting:', error);
     }
   };
 
@@ -246,6 +246,7 @@ const MeetingScheduler = () => {
               <p>Date and Time: {new Date(appointment.date).toLocaleString()}</p>
               <p>Purpose: {appointment.purpose}</p>
               <p>Doctor: Dr. {appointment.doctor.name}</p>
+              <p>Join Link: <a href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
               <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
               <button onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
               {rescheduleAppointmentId === appointment.id && (

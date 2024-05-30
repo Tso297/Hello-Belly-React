@@ -264,6 +264,7 @@ const DoctorDashboard = () => {
               <p>Date and Time: {new Date(new Date(appointment.date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
               <p>Purpose: {appointment.purpose}</p>
               <p>Doctor: Dr. {appointment.doctor.name}</p>
+              <a href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a>
               <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
               <button onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
               {rescheduleAppointmentId === appointment.id && (
