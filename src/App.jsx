@@ -11,6 +11,10 @@ import AddClassForm from "./components/AddClassForm";
 import GoogleMapsComponent from "./components/GoogleMapsComponent";
 import ErrorBoundary from "./components/ErrorBoundary";
 import DoctorPatientSession from "./components/DoctorPatientSession";
+import SendMessagePage from "./components/SendMessagePage";
+import Inbox from "./components/Inbox";
+import SentMessages from "./components/SentMessages";
+import MessageDetail from "./components/MessageDetail";
 
 function App() {
   const [meeting, setMeeting] = useState(null);
