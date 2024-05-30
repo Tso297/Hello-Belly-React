@@ -22,7 +22,7 @@ const MeetingScheduler = () => {
 
   const fetchAppointments = async (email) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/appointments?email=${email}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments?email=${email}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const MeetingScheduler = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/doctors', {
+      const response = await fetch('http://127.0.0.1:5000/api/doctors', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const MeetingScheduler = () => {
 
   const fetchAvailableSlots = async (doctorId, date) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -78,8 +78,8 @@ const MeetingScheduler = () => {
     };
 
     const url = editingAppointment
-      ? `http://localhost:5000/api/appointments/${editingAppointment.id}`
-      : `http://localhost:5000/api/schedule_meeting`;
+      ? `http://127.0.0.1:5000/api/appointments/${editingAppointment.id}`
+      : `http://127.0.0.1:5000/api/schedule_meeting`;
     const method = editingAppointment ? 'PUT' : 'POST';
 
     try {
@@ -125,7 +125,7 @@ const MeetingScheduler = () => {
 
   const handleCancel = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/appointments/${id}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -145,36 +145,38 @@ const MeetingScheduler = () => {
 
   const handleReschedule = async (id) => {
     if (!selectedDate) {
-        alert('Please select a new date and time for rescheduling');
-        return;
+      alert('Please select a new date and time for rescheduling');
+      return;
     }
 
     const meetingData = {
-        date: selectedDate.toISOString(),  // Ensure the correct date is sent
+      date: selectedDate.toISOString(),
     };
 
-    try {
-        const response = await fetch(`http://localhost:5000/api/appointments/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(meetingData),
-        });
+    console.log('Rescheduling meeting with data:', meetingData);
 
-        if (response.ok) {
-            alert('Meeting rescheduled successfully!');
-            setSelectedDate(null);
-            setRescheduleAppointmentId(null);
-            fetchAppointments(user.email);
-        } else {
-            const errorData = await response.json();
-            alert(`Error: ${errorData.error}`);
-        }
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meetingData),
+      });
+
+      if (response.ok) {
+        alert('Meeting rescheduled successfully!');
+        setSelectedDate(null);
+        setRescheduleAppointmentId(null);
+        fetchAppointments(user.email);
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
     } catch (error) {
-        console.error('Error rescheduling meeting:', error);
+      console.error('Error rescheduling meeting:', error);
     }
-};
+  };
 
   const handleEdit = (appointment) => {
     setEditingAppointment(appointment);
@@ -187,8 +189,7 @@ const MeetingScheduler = () => {
   minTime.setHours(9, 0, 0, 0);
   minTime.setMinutes(0);
   const maxTime = new Date();
-  maxTime.setHours(17, 0, 0, 0); // Allow scheduling a 30-minute appointment at 5 PM
-  maxTime.setMinutes(0);
+  maxTime.setHours(17, 0, 0, 0);
 
   return (
     <div>
@@ -245,6 +246,7 @@ const MeetingScheduler = () => {
               <p>Date and Time: {new Date(appointment.date).toLocaleString()}</p>
               <p>Purpose: {appointment.purpose}</p>
               <p>Doctor: Dr. {appointment.doctor.name}</p>
+              <p>Join Link: <a href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
               <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
               <button onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
               {rescheduleAppointmentId === appointment.id && (

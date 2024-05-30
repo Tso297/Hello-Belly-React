@@ -17,7 +17,7 @@ export const ZoomProvider = ({ children }) => {
             setUser(currentUser);
             if (currentUser) {
                 try {
-                    const response = await fetch('http://localhost:5000/get_zoom_token', { method: 'POST' });
+                    const response = await fetch('http://127.0.0.1:5000/get_zoom_token', { method: 'POST' });
                     const data = await response.json();
                     setZoomAccessToken(data.access_token);
                     fetchAppointments(currentUser.email);
@@ -36,7 +36,7 @@ export const ZoomProvider = ({ children }) => {
     const fetchAppointments = async (email) => {
         console.log('Fetching appointments for email:', email);
         try {
-            const response = await fetch(`http://localhost:5000/api/appointments?email=${email}`, {
+            const response = await fetch(`http://127.0.0.1:5000/api/appointments?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const ZoomProvider = ({ children }) => {
     const checkIfDoctor = async (email) => {
         console.log('Checking if user is a doctor for email:', email);
         try {
-            const response = await fetch(`http://localhost:5000/api/is_doctor?email=${email}`, {
+            const response = await fetch(`http://127.0.0.1:5000/api/is_doctor?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export const ZoomProvider = ({ children }) => {
             setIsDoctor(data.is_doctor);
             console.log('Is doctor:', data.is_doctor);
             if (data.is_doctor) {
-                const doctorResponse = await fetch(`http://localhost:5000/api/doctor_by_email?email=${email}`, {
+                const doctorResponse = await fetch(`http://127.0.0.1:5000/api/doctor_by_email?email=${email}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

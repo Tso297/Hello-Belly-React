@@ -33,8 +33,8 @@ const Navbar = () => {
       }}
     >
             <div>
-                <Link to="/">Home</Link> | <Link to="/about">About</Link>
-                {user && user.role === "doctor" && (
+                <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/FAQ">FAQ</Link> | <Link to="/Classes">Classes</Link> | <Link to="/AddClasses">Add Classes</Link> | <Link to="/GoogleMaps">Maps</Link>
+                {user && user.email === 'torcsh30@gmail.com' && (
                     <> | <Link to="/admin/onboard">Onboard Doctor</Link></>
                 )}
                 {isDoctor && (

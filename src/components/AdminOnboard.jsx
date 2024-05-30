@@ -10,7 +10,7 @@ const AdminOnboard = () => {
     const doctorData = { name, email };
 
     try {
-      const response = await fetch('http://localhost:5000/api/doctors', {
+      const response = await fetch('http://127.0.0.1:5000/api/admin/doctors?admin_email=torcsh30@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,6 +22,8 @@ const AdminOnboard = () => {
         const data = await response.json();
         alert('Doctor created successfully');
         // Handle successful doctor creation (e.g., reset form, update state)
+        setName('');
+        setEmail('');
       } else {
         const errorData = await response.json();
         alert(`Error creating doctor: ${errorData.error}`);
