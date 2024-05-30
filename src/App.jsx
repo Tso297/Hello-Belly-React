@@ -8,6 +8,9 @@ import AdminOnboard from './components/AdminOnboard';
 import PregnancyQA from './components/PregnancyQA';
 import ClassCalendar from './components/ClassCalendar';
 import AddClassForm from './components/AddClassForm';
+import GoogleMapsComponent from './components/GoogleMapsComponent';
+import ErrorBoundary from './components/ErrorBoundary';
+
 
 
 function App() {
@@ -23,6 +26,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/GoogleMaps" element={<ErrorBoundary><GoogleMapsComponent /></ErrorBoundary>} />
           <Route path="/Classes" element={<ClassCalendar />} />
           <Route path="/AddClasses" element={<AddClassForm />} />
           <Route path="/FAQ" element={<PregnancyQA />} />
