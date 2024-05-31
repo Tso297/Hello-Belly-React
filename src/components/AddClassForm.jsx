@@ -10,7 +10,7 @@ const AddClassForm = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/classes');
+        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/classes');
         const data = await response.json();
         setClasses(data);
       } catch (error) {
@@ -23,7 +23,7 @@ const AddClassForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = selectedClass ? `http://127.0.0.1:5000/api/update_class/${selectedClass.id}` : 'http://127.0.0.1:5000/api/add_class';
+    const url = selectedClass ? `https://hello-belly-flask-1.onrender.com/api/update_class/${selectedClass.id}` : 'https://hello-belly-flask-1.onrender.com/api/add_class';
     const method = selectedClass ? 'PUT' : 'POST';
 
     try {
@@ -51,7 +51,7 @@ const AddClassForm = () => {
 
   const handleDelete = async (classId) => {
     try {
-      await fetch(`http://127.0.0.1:5000/api/delete_class/${classId}`, {
+      await fetch(`https://hello-belly-flask-1.onrender.com/api/delete_class/${classId}`, {
         method: 'DELETE',
       });
       setClasses(classes.filter(cls => cls.id !== classId));

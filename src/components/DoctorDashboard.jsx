@@ -25,7 +25,7 @@ const DoctorDashboard = () => {
 
   const fetchDoctorAppointmentsAndTimeOffs = async (doctorId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/doctor_appointments?doctor_id=${doctorId}`, {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/doctor_appointments?doctor_id=${doctorId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const DoctorDashboard = () => {
 
   const fetchAvailableSlots = async (doctorId, date) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/available_slots?doctor_id=${doctorId}&date=${date}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const DoctorDashboard = () => {
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/request_time_off', {
+      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/request_time_off', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const DoctorDashboard = () => {
     };
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const DoctorDashboard = () => {
 
   const handleCancel = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ const DoctorDashboard = () => {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:5000/api/appointments/${id}`, {
+        const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -11,8 +11,9 @@ const PregnancyQA = () => {
   useEffect(() => {
     const fetchSidebarVideos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/youtube?query=pregnancy tips');
+        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips');
         const data = await response.json();
+        console.log('Sidebar Videos:', data.videos);  // Debugging
         setSidebarVideos(data.videos);
       } catch (error) {
         console.error('Error fetching sidebar videos:', error);
@@ -27,35 +28,44 @@ const PregnancyQA = () => {
   };
 
   const handleAskQuestion = async () => {
+    console.log('Asking question:', question); // Debugging
+
+    // Fetch YouTube videos
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/chatgpt', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ question }),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            setAnswer(data.answer);
-
-            // Log headers
-            for (let [key, value] of response.headers.entries()) {
-                console.log(`${key}: ${value}`);
-            }
-
-            const videoResponse = await fetch(`http://127.0.0.1:5000/api/youtube?query=${question}`);
-            const videoData = await videoResponse.json();
-            setVideos(videoData.videos);
-        } else {
-            const errorData = await response.json();
-            console.error('Error fetching answer:', errorData);
-        }
+      const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
+      if (videoResponse.ok) {
+        const videoData = await videoResponse.json();
+        console.log('Fetched Videos:', videoData.videos);  // Debugging
+        setVideos(videoData.videos);
+      } else {
+        console.error('Error fetching videos');
+      }
     } catch (error) {
-        console.error('Error asking question:', error);
+      console.error('Error fetching videos:', error);
     }
-};
+
+    // Fetch ChatGPT answer
+    try {
+      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/chatgpt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAnswer(data.answer);
+        console.log('Fetched answer:', data.answer); // Debugging
+      } else {
+        const errorData = await response.json();
+        console.error('Error fetching answer:', errorData);
+      }
+    } catch (error) {
+      console.error('Error asking question:', error);
+    }
+  };
 
   return (
     <div>

@@ -26,7 +26,7 @@ const ClassCalendar = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/classes');
+        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/classes');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
