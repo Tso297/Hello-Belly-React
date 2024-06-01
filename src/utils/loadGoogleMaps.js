@@ -8,7 +8,7 @@ const loadGoogleMapsScript = (apiKey, libraries = []) => {
     }
     const script = document.createElement('script');
     const librariesParam = libraries.length > 0 ? `&libraries=${libraries.join(',')}` : '';
-    script.src = `https://hello-belly-flask-1.onrender.com/maps/api/js?key=${apiKey}${librariesParam}&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${librariesParam}&callback=initMap`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
