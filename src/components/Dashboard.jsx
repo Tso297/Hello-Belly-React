@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentAppointmentIndex, setCurrentAppointmentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('');
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -153,42 +154,50 @@ const Dashboard = () => {
               Upcoming Appointments <span className="appointments-count">{appointments.length}</span>
             </h2>
             <div className="appointments-list">
-  {appointments.length === 0 ? (
-    <p>No upcoming appointments</p>
-  ) : (
-    <>
-      <button onClick={showPreviousAppointment} className="carousel-button carousel-button-left">←</button>
-      <div className={`appointment-item ${slideDirection === 'left-exit' ? 'left-exit' : slideDirection === 'left-enter' ? 'left-enter' : slideDirection === 'right-exit' ? 'right-exit' : slideDirection === 'right-enter' ? 'right-enter' : 'animate'}`}>
-        <h3>{appointments[currentAppointmentIndex].title}</h3>
-        <p>Purpose: {appointments[currentAppointmentIndex].purpose}</p>
-        <p>Doctor: Dr. {appointments[currentAppointmentIndex].doctor.name}</p>
-        <p>Date and Time: {new Date(appointments[currentAppointmentIndex].date).toLocaleString()}</p>
-        <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex].id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
-        <button onClick={() => handleCancel(appointments[currentAppointmentIndex].id)}>Cancel</button>
-        <button onClick={() => setRescheduleAppointmentId(appointments[currentAppointmentIndex].id)}>Reschedule</button>
-        {rescheduleAppointmentId === appointments[currentAppointmentIndex].id && (
-          <div>
-            <label>Reschedule Date and Time:</label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              showTimeSelect
-              timeIntervals={30}
-              timeCaption="Time"
-              dateFormat="MMMM d, yyyy h:mm aa"
-              minDate={new Date()}
-            />
-            <button onClick={() => handleReschedule(appointments[currentAppointmentIndex].id)}>Confirm Reschedule</button>
-          </div>
-        )}
-      </div>
-      <button onClick={showNextAppointment} className="carousel-button carousel-button-right">→</button>
-    </>
-  )}
-</div>
+              {appointments.length === 0 ? (
+                <p>No upcoming appointments</p>
+              ) : (
+                <>
+                  <button onClick={showPreviousAppointment} className="carousel-button carousel-button-left">←</button>
+                  <div className={`appointment-item ${slideDirection === 'left-exit' ? 'left-exit' : slideDirection === 'left-enter' ? 'left-enter' : slideDirection === 'right-exit' ? 'right-exit' : slideDirection === 'right-enter' ? 'right-enter' : 'animate'}`}>
+                    <h3>{appointments[currentAppointmentIndex].title}</h3>
+                    <p>Date and Time: {new Date(appointments[currentAppointmentIndex].date).toLocaleString()}</p>
+                    <p>Purpose: {appointments[currentAppointmentIndex].purpose}</p>
+                    <p>Doctor: Dr. {appointments[currentAppointmentIndex].doctor.name}</p>
+                    <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex].id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
+                    <button onClick={() => handleCancel(appointments[currentAppointmentIndex].id)}>Cancel</button>
+                    <button onClick={() => setRescheduleAppointmentId(appointments[currentAppointmentIndex].id)}>Reschedule</button>
+                    {rescheduleAppointmentId === appointments[currentAppointmentIndex].id && (
+                      <div>
+                        <label>Reschedule Date and Time:</label>
+                        <DatePicker
+                          selected={selectedDate}
+                          onChange={handleDateChange}
+                          showTimeSelect
+                          timeIntervals={30}
+                          timeCaption="Time"
+                          dateFormat="MMMM d, yyyy h:mm aa"
+                          minDate={new Date()}
+                        />
+                        <button onClick={() => handleReschedule(appointments[currentAppointmentIndex].id)}>Confirm Reschedule</button>
+                      </div>
+                    )}
+                  </div>
+                  <button onClick={showNextAppointment} className="carousel-button carousel-button-right">→</button>
+                </>
+              )}
+            </div>
           </div>
           <div className="dashboard-google-maps">
-            <GoogleMapsComponent />
+            <GoogleMapsComponent selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
+            <div className="map-legend">
+              <h3>Legend</h3>
+              <ul>
+                <li><span className="hospital-marker"></span> Hospitals</li>
+                <li><span className="womens-physicians-marker"></span> Women's Physicians</li>
+                <li><span className="obgyn-marker"></span> OB-GYNs</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="dashboard-user-info">
@@ -201,6 +210,31 @@ const Dashboard = () => {
             <span className="close-button" onClick={closeModal}>&times;</span>
             <MeetingScheduler closeModal={closeModal} />
           </div>
+        </div>
+      )}
+      {selectedPlace && (
+        <div className="google-maps-selected-place">
+          <h2>{selectedPlace.name}</h2>
+          {selectedPlace.photos && selectedPlace.photos[0] && (
+            <img
+              src={selectedPlace.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 })}
+              alt={selectedPlace.name}
+            />
+          )}
+          <p>{selectedPlace.vicinity}</p>
+          {selectedPlace.formatted_phone_number && <p>Phone: {selectedPlace.formatted_phone_number}</p>}
+          {selectedPlace.formatted_address && <p>Address: {selectedPlace.formatted_address}</p>}
+          {selectedPlace.website && (
+            <p>
+              Website: <a href={selectedPlace.website} target="_blank" rel="noopener noreferrer">{selectedPlace.website}</a>
+            </p>
+          )}
+          {selectedPlace.opening_hours && (
+            <p>
+              Hours: {selectedPlace.opening_hours.weekday_text.join(', ')}
+            </p>
+          )}
+          <button onClick={() => setSelectedPlace(null)}>Close</button>
         </div>
       )}
     </div>
