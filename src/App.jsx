@@ -10,11 +10,7 @@ import ClassCalendar from "./components/ClassCalendar";
 import AddClassForm from "./components/AddClassForm";
 import GoogleMapsComponent from "./components/GoogleMapsComponent";
 import ErrorBoundary from "./components/ErrorBoundary";
-import DoctorPatientSession from "./components/DoctorPatientSession";
-import SendMessagePage from "./components/SendMessagePage";
-import Inbox from "./components/Inbox";
-import SentMessages from "./components/SentMessages";
-import MessageDetail from "./components/MessageDetail";
+import ChatPage from "./components/ChatPage";
 
 function App() {
   const [meeting, setMeeting] = useState(null);
@@ -43,10 +39,8 @@ function App() {
           <Route path="/admin/onboard" element={<AdminOnboard />} />
           <Route path="/schedule" element={<MeetingScheduler />} />
           <Route path="/doctor_dashboard" element={<DoctorDashboard />} />
-          <Route path="/send-message" element={<SendMessagePage />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/sent-messages" element={<SentMessages />} />
-          <Route path="/message/:messageId" element={<MessageDetail />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chat/:threadId" element={<ChatPage />} />
         </Routes>
       </div>
     </Router>

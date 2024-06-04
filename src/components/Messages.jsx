@@ -10,7 +10,6 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { Firebase } from "../firebase";
-import SendMessage from "./SendMessage";
 
 const db = getFirestore(Firebase);
 
@@ -18,14 +17,14 @@ const Messages = ({ threadId }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    if (!threadId) return; // Ensure threadId is defined
+    if (!threadId) return;
 
     const fetchMessages = async () => {
       try {
         const q = query(
           collection(db, "messages"),
           where("threadId", "==", threadId),
-          orderBy("timestamp", "asc") // Order by timestamp ascending
+          orderBy("timestamp", "asc")
         );
         const querySnapshot = await getDocs(q);
         const fetchedMessages = [];
@@ -52,15 +51,15 @@ const Messages = ({ threadId }) => {
   }, [threadId]);
 
   if (!threadId) {
-    return <div>Loading messages...</div>; // Display a loading message while waiting for threadId
+    return <div>Loading messages...</div>;
   }
 
   return (
     <div>
       <h2>Messages</h2>
-      <ul>
+      <ul className="chat-history">
         {messages.map((message) => (
-          <li key={message.id}>
+          <li key={message.id} className="message-bubble">
             <strong>From:</strong> {message.senderName} <br />
             <strong>Date:</strong>{" "}
             {new Date(message.timestamp.seconds * 1000).toLocaleString()} <br />
@@ -68,7 +67,6 @@ const Messages = ({ threadId }) => {
           </li>
         ))}
       </ul>
-      {/* <SendMessage threadId={threadId} /> */}
     </div>
   );
 };
