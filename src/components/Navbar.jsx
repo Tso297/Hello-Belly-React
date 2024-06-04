@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import './Navbar.css';
+import '../CSS/Navbar.css';
 import { useZoom } from './ZoomContext';
 
 const Navbar = () => {
@@ -24,29 +24,34 @@ const Navbar = () => {
     };
 
     return (
-        <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
-            <div>
-                <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/FAQ">FAQ</Link> | <Link to="/Classes">Classes</Link> | <Link to="/AddClasses">Add Classes</Link> | <Link to="/GoogleMaps">Maps</Link>
-                {user && user.email === 'torcsh30@gmail.com' && (
-                    <> | <Link to="/admin/onboard">Onboard Doctor</Link></>
-                )}
-                {isDoctor && (
-                    <> | <Link to="/doctor_dashboard">Doctor Dashboard</Link></>
-                )}
-            </div>
-            <div>
-                {user ? (
-                    <div>
-                        <span>{user.displayName}</span>
-                        <button onClick={handleCreateMeeting}>Schedule a Meeting</button>
-                        <button onClick={handleSignOut}>Sign Out</button>
-                    </div>
-                ) : (
-                    <button onClick={handleGoogleSignIn}>Sign In with Google</button>
-                )}
-            </div>
+        <nav className="navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
+          <div className="navbar-links">
+            <Link className="navbar-link" to="/">Home</Link>  
+            <Link className="navbar-link" to="/about">About</Link>  
+            <Link className="navbar-link" to="/FAQ">FAQ</Link>  
+            <Link className="navbar-link" to="/Classes">Classes</Link>  
+            <Link className="navbar-link" to="/AddClasses">Add Classes</Link>  
+            <Link className="navbar-link" to="/GoogleMaps">Maps</Link>
+            {user && user.email === 'torcsh30@gmail.com' && (
+              <>  <Link className="navbar-link" to="/admin/onboard">Onboard Doctor</Link></>
+            )}
+            {isDoctor && (
+              <>  <Link className="navbar-link" to="/doctor_dashboard">Doctor Dashboard</Link></>
+            )}
+          </div>
+          <div className="navbar-user-actions">
+            {user ? (
+              <div className="navbar-user-info">
+                <span className="navbar-user-name">{user.displayName}</span>
+                <button className="navbar-button" onClick={handleCreateMeeting}>Schedule a Meeting</button>
+                <button className="navbar-button" onClick={handleSignOut}>Sign Out</button>
+              </div>
+            ) : (
+              <button className="navbar-button" onClick={handleGoogleSignIn}>Sign In with Google</button>
+            )}
+          </div>
         </nav>
-    );
-};
-
-export default Navbar;
+      );
+    };
+      
+      export default Navbar;

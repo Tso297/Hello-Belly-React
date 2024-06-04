@@ -65,7 +65,7 @@ const ClassCalendar = () => {
   }, []);
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column' }}>
+    <Box className="class-calendar" sx={{ display: 'flex', flexDirection: 'column' }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
@@ -83,5 +83,4 @@ const ClassCalendar = () => {
     </Box>
   );
 };
-
-export default ClassCalendar;
+  export default ClassCalendar;

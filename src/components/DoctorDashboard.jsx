@@ -210,13 +210,14 @@ const DoctorDashboard = () => {
   maxTime.setHours(17, 0, 0, 0);
 
   return (
-    <div>
-      <h2>Doctor Dashboard</h2>
-
-      <h3>Request Time Off</h3>
-      <div>
-        <label>Start Date and Time:</label>
+    <div className="doctor-dashboard">
+      <h2 className="doctor-dashboard-title">Doctor Dashboard</h2>
+  
+      <h3 className="doctor-dashboard-section-title">Request Time Off</h3>
+      <div className="doctor-dashboard-form-group">
+        <label className="doctor-dashboard-label">Start Date and Time:</label>
         <DatePicker
+          className="doctor-dashboard-datepicker"
           selected={timeOffStartDate}
           onChange={handleTimeOffDateChange}
           showTimeSelect
@@ -229,9 +230,10 @@ const DoctorDashboard = () => {
           includeTimes={availableSlots}
         />
       </div>
-      <div>
-        <label>End Date and Time:</label>
+      <div className="doctor-dashboard-form-group">
+        <label className="doctor-dashboard-label">End Date and Time:</label>
         <DatePicker
+          className="doctor-dashboard-datepicker"
           selected={timeOffEndDate}
           onChange={date => setTimeOffEndDate(date)}
           showTimeSelect
@@ -244,33 +246,35 @@ const DoctorDashboard = () => {
           includeTimes={availableSlots}
         />
       </div>
-      <div>
-        <label>Purpose:</label>
+      <div className="doctor-dashboard-form-group">
+        <label className="doctor-dashboard-label">Purpose:</label>
         <input
+          className="doctor-dashboard-input"
           type="text"
           value={timeOffPurpose}
           onChange={(e) => setTimeOffPurpose(e.target.value)}
         />
       </div>
-      <button onClick={handleRequestTimeOff}>Request Time Off</button>
-
-      <h3>Upcoming Appointments</h3>
+      <button className="doctor-dashboard-button" onClick={handleRequestTimeOff}>Request Time Off</button>
+  
+      <h3 className="doctor-dashboard-section-title">Upcoming Appointments</h3>
       {appointments.length === 0 ? (
-        <p>No appointments scheduled.</p>
+        <p className="doctor-dashboard-no-appointments">No appointments scheduled.</p>
       ) : (
-        <ul>
+        <ul className="doctor-dashboard-appointments-list">
           {appointments.map((appointment) => (
-            <li key={appointment.id}>
-              <p>Date and Time: {new Date(new Date(appointment.date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
-              <p>Purpose: {appointment.purpose}</p>
-              <p>Doctor: Dr. {appointment.doctor.name}</p>
-              <a href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a>
-              <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
-              <button onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
+            <li className="doctor-dashboard-appointment-item" key={appointment.id}>
+              <p className="doctor-dashboard-appointment-date">Date and Time: {new Date(new Date(appointment.date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
+              <p className="doctor-dashboard-appointment-purpose">Purpose: {appointment.purpose}</p>
+              <p className="doctor-dashboard-appointment-doctor">Doctor: Dr. {appointment.doctor.name}</p>
+              <a className="doctor-dashboard-appointment-link" href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a>
+              <button className="doctor-dashboard-button" onClick={() => handleCancel(appointment.id)}>Cancel</button>
+              <button className="doctor-dashboard-button" onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
               {rescheduleAppointmentId === appointment.id && (
-                <div>
-                  <label>Reschedule Date and Time:</label>
+                <div className="doctor-dashboard-reschedule">
+                  <label className="doctor-dashboard-label">Reschedule Date and Time:</label>
                   <DatePicker
+                    className="doctor-dashboard-datepicker"
                     selected={selectedDate}
                     onChange={handleDateChange}
                     showTimeSelect
@@ -282,30 +286,31 @@ const DoctorDashboard = () => {
                     minDate={new Date()}
                     includeTimes={availableSlots}
                   />
-                  <button onClick={() => handleReschedule(appointment.id)}>Confirm Reschedule</button>
+                  <button className="doctor-dashboard-button" onClick={() => handleReschedule(appointment.id)}>Confirm Reschedule</button>
                 </div>
               )}
             </li>
           ))}
         </ul>
       )}
-
-      <h3>Time Off Requests</h3>
+  
+      <h3 className="doctor-dashboard-section-title">Time Off Requests</h3>
       {timeOffs.length === 0 ? (
-        <p>No time off requested.</p>
+        <p className="doctor-dashboard-no-timeoffs">No time off requested.</p>
       ) : (
-        <ul>
+        <ul className="doctor-dashboard-timeoffs-list">
           {timeOffs.map((timeOff) => (
-            <li key={timeOff.id}>
-              <p>Start Time: {new Date(new Date(timeOff.date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
-              <p>End Time: {new Date(new Date(timeOff.end_date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
-              <p>Purpose: {timeOff.purpose}</p>
-              <button onClick={() => handleCancel(timeOff.id)}>Cancel</button>
-              <button onClick={() => setRescheduleTimeOffId(timeOff.id)}>Reschedule</button>
+            <li className="doctor-dashboard-timeoff-item" key={timeOff.id}>
+              <p className="doctor-dashboard-timeoff-start">Start Time: {new Date(new Date(timeOff.date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
+              <p className="doctor-dashboard-timeoff-end">End Time: {new Date(new Date(timeOff.end_date).getTime() - 4 * 60 * 60 * 1000).toLocaleString()}</p>
+              <p className="doctor-dashboard-timeoff-purpose">Purpose: {timeOff.purpose}</p>
+              <button className="doctor-dashboard-button" onClick={() => handleCancel(timeOff.id)}>Cancel</button>
+              <button className="doctor-dashboard-button" onClick={() => setRescheduleTimeOffId(timeOff.id)}>Reschedule</button>
               {rescheduleTimeOffId === timeOff.id && (
-                <div>
-                  <label>Reschedule Start Date and Time:</label>
+                <div className="doctor-dashboard-reschedule-timeoff">
+                  <label className="doctor-dashboard-label">Reschedule Start Date and Time:</label>
                   <DatePicker
+                    className="doctor-dashboard-datepicker"
                     selected={timeOffStartDate}
                     onChange={handleTimeOffDateChange}
                     showTimeSelect
@@ -317,8 +322,9 @@ const DoctorDashboard = () => {
                     minDate={new Date()}
                     includeTimes={availableSlots}
                   />
-                  <label>Reschedule End Date and Time:</label>
+                  <label className="doctor-dashboard-label">Reschedule End Date and Time:</label>
                   <DatePicker
+                    className="doctor-dashboard-datepicker"
                     selected={timeOffEndDate}
                     onChange={date => setTimeOffEndDate(date)}
                     showTimeSelect
@@ -330,17 +336,17 @@ const DoctorDashboard = () => {
                     minDate={new Date()}
                     includeTimes={availableSlots}
                   />
-                  <button onClick={() => handleRescheduleTimeOff(timeOff.id)}>Confirm Reschedule</button>
+                  <button className="doctor-dashboard-button" onClick={() => handleRescheduleTimeOff(timeOff.id)}>Confirm Reschedule</button>
                 </div>
               )}
             </li>
           ))}
         </ul>
       )}
-
-      <button onClick={handleSignOut}>Sign Out</button>
+  
+      <button className="doctor-dashboard-signout-button" onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };
-
-export default DoctorDashboard;
+  
+  export default DoctorDashboard;

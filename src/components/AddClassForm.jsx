@@ -86,10 +86,11 @@ const AddClassForm = () => {
   }
 
   return (
-    <div>
-      <h2>{selectedClass ? 'Update Class' : 'Add Class'}</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="add-class-form">
+      <h2 className="add-class-title">{selectedClass ? 'Update Class' : 'Add Class'}</h2>
+      <form className="add-class-form-element" onSubmit={handleSubmit}>
         <input
+          className="add-class-input"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -97,6 +98,7 @@ const AddClassForm = () => {
           required
         />
         <select
+          className="add-class-day-select"
           value={dayOfWeek}
           onChange={(e) => setDayOfWeek(e.target.value)}
           required
@@ -111,6 +113,7 @@ const AddClassForm = () => {
           <option value="Sunday">Sunday</option>
         </select>
         <select
+          className="add-class-time-select"
           value={time}
           onChange={(e) => setTime(e.target.value)}
           required
@@ -122,30 +125,30 @@ const AddClassForm = () => {
             </option>
           ))}
         </select>
-        <button type="submit">{selectedClass ? 'Update' : 'Add'}</button>
-        {selectedClass && <button onClick={() => {
+        <button className="add-class-submit-button" type="submit">{selectedClass ? 'Update' : 'Add'}</button>
+        {selectedClass && <button className="add-class-cancel-button" onClick={() => {
           setSelectedClass(null);
           setName('');
           setDayOfWeek('');
           setTime('');
         }}>Cancel</button>}
       </form>
-
-      <h2>Existing Classes</h2>
-      <ul>
+  
+      <h2 className="existing-classes-title">Existing Classes</h2>
+      <ul className="existing-classes-list">
         {classes.map((classItem) => (
-          <li key={classItem.id}>
-            <h3>{classItem.name}</h3>
-            <p>Day: {classItem.day_of_week}</p>
-            <p>Time: {formatTime(classItem.time)}</p>
-            <p>Link: <a href={classItem.link} target="_blank" rel="noopener noreferrer">Join Class</a></p>
-            <button onClick={() => handleEdit(classItem)}>Edit</button>
-            <button onClick={() => handleDelete(classItem.id)}>Delete</button>
+          <li className="existing-class-item" key={classItem.id}>
+            <h3 className="existing-class-name">{classItem.name}</h3>
+            <p className="existing-class-day">Day: {classItem.day_of_week}</p>
+            <p className="existing-class-time">Time: {formatTime(classItem.time)}</p>
+            <p className="existing-class-link">Link: <a href={classItem.link} target="_blank" rel="noopener noreferrer">Join Class</a></p>
+            <button className="existing-class-edit-button" onClick={() => handleEdit(classItem)}>Edit</button>
+            <button className="existing-class-delete-button" onClick={() => handleDelete(classItem.id)}>Delete</button>
           </li>
         ))}
       </ul>
     </div>
   );
-};
-
-export default AddClassForm;
+  };
+  
+  export default AddClassForm;

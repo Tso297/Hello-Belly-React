@@ -68,25 +68,27 @@ const PregnancyQA = () => {
   };
 
   return (
-    <div>
-      <h2>Pregnancy Q&A</h2>
+    <div className="pregnancy-qa">
+      <h2 className="pregnancy-qa-title">Pregnancy Q&A</h2>
       <input
+        className="pregnancy-qa-input"
         type="text"
         value={question}
         onChange={handleQuestionChange}
         placeholder="Ask a question about pregnancy"
       />
-      <button onClick={handleAskQuestion}>Ask</button>
-      <div>
-        <h3>Answer</h3>
-        <p>{answer}</p>
+      <button className="pregnancy-qa-ask-button" onClick={handleAskQuestion}>Ask</button>
+      <div className="pregnancy-qa-answer-section">
+        <h3 className="pregnancy-qa-answer-title">Answer</h3>
+        <p className="pregnancy-qa-answer">{answer}</p>
       </div>
-      <div>
-        <h3>Relevant Videos</h3>
+      <div className="pregnancy-qa-videos-section">
+        <h3 className="pregnancy-qa-videos-title">Relevant Videos</h3>
         {videos.map((video) => (
-          <div key={video.id}>
-            <h4>{video.title}</h4>
+          <div className="pregnancy-qa-video" key={video.id}>
+            <h4 className="pregnancy-qa-video-title">{video.title}</h4>
             <iframe
+              className="pregnancy-qa-video-iframe"
               width="560"
               height="315"
               src={`https://www.youtube.com/embed/${video.id}`}
@@ -98,12 +100,13 @@ const PregnancyQA = () => {
           </div>
         ))}
       </div>
-      <div>
-        <h3>Pregnancy Tips Videos</h3>
+      <div className="pregnancy-qa-sidebar-videos-section">
+        <h3 className="pregnancy-qa-sidebar-videos-title">Pregnancy Tips Videos</h3>
         {sidebarVideos.map((video) => (
-          <div key={video.id}>
-            <h4>{video.title}</h4>
+          <div className="pregnancy-qa-sidebar-video" key={video.id}>
+            <h4 className="pregnancy-qa-sidebar-video-title">{video.title}</h4>
             <iframe
+              className="pregnancy-qa-sidebar-video-iframe"
               width="560"
               height="315"
               src={`https://www.youtube.com/embed/${video.id}`}
@@ -118,5 +121,5 @@ const PregnancyQA = () => {
     </div>
   );
 };
-
-export default PregnancyQA;
+  
+  export default PregnancyQA;

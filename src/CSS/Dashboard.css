@@ -1,0 +1,120 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  color: black;
+}
+
+/* Navbar */
+.dashboard-navbar {
+  width: 250px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-main {
+  margin-left: 250px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  font-size: 1.5em;
+}
+
+/* Main Content */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+/* Calendar Section */
+.dashboard-calendar {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.dashboard-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-calendar-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dashboard-action-button:hover {
+  background-color: #0056b3;
+}
+
+/* Upcoming Appointments */
+.dashboard-upcoming-appointments,
+.dashboard-resources,
+.dashboard-google-maps {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* PregnancyQA */
+.pregnancy-qa {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.pregnancy-qa-input,
+.pregnancy-qa-ask-button {
+  margin-bottom: 10px;
+}
+
+.pregnancy-qa-video,
+.pregnancy-qa-sidebar-video {
+  margin-bottom: 10px;
+}
+
+.pregnancy-qa-video iframe,
+.pregnancy-qa-sidebar-video iframe {
+  width: 100%;
+  max-width: 300px; /* Adjust the width as needed */
+  height: auto;
+}
+
+/* User Info */
+.dashboard-user-info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+}

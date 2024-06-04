@@ -10,6 +10,7 @@ import ClassCalendar from './components/ClassCalendar';
 import AddClassForm from './components/AddClassForm';
 import GoogleMapsComponent from './components/GoogleMapsComponent';
 import ErrorBoundary from './components/ErrorBoundary';
+import Dashboard from './components/Dashboard';
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="Dashboard" element={<Dashboard />} />
           <Route path="/GoogleMaps" element={<ErrorBoundary><GoogleMapsComponent /></ErrorBoundary>} />
           <Route path="/Classes" element={<ClassCalendar />} />
           <Route path="/AddClasses" element={<AddClassForm />} />
