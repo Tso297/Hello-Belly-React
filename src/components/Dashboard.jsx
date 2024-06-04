@@ -1,48 +1,210 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Navbar from './Navbar';
 import ClassCalendar from './ClassCalendar'; // Assuming this combines appointments and classes
-import MeetingScheduler from './MeetingScheduler'; // Extract the upcoming appointments section
 import PregnancyQA from './PregnancyQA'; // Chatbox and videos related to the chat topic
 import GoogleMapsComponent from './GoogleMapsComponent';
-import '.././CSS/Dashboard.css';
+import MeetingScheduler from './MeetingScheduler';
+import { useZoom } from './ZoomContext';
+import '../CSS/Dashboard.css';
 
 const Dashboard = () => {
-    return (
-      <div className="dashboard">
-        <Navbar className="dashboard-navbar" />
-        <div className="dashboard-main">
-          <header className="dashboard-header">
-            <h1 className="dashboard-title">Dashboard</h1>
-          </header>
-          <div className="dashboard-content">
-            <div className="dashboard-calendar">
-              <div className="dashboard-calendar-header">
-                <h2>Your Schedule</h2>
-                <div className="dashboard-calendar-actions">
-                  <button className="dashboard-action-button">Schedule a call</button>
-                  <button className="dashboard-action-button">Chat with provider</button>
-                </div>
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { user, appointments, setAppointments } = useZoom();
+  const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [currentAppointmentIndex, setCurrentAppointmentIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState('');
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  useEffect(() => {
+    if (user) {
+      const fetchAppointments = async () => {
+        try {
+          const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments?email=${user.email}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const data = await response.json();
+          setAppointments(data.appointments);
+        } catch (error) {
+          console.error('Error fetching appointments:', error);
+        }
+      };
+
+      fetchAppointments();
+    }
+  }, [user, setAppointments]);
+
+  const handleCancel = async (id) => {
+    try {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        alert('Meeting canceled successfully!');
+        setAppointments((prevAppointments) => prevAppointments.filter((appointment) => appointment.id !== id));
+        setCurrentAppointmentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+      } else {
+        alert('Error canceling meeting');
+      }
+    } catch (error) {
+      console.error('Error canceling meeting:', error);
+    }
+  };
+
+  const handleReschedule = async (id) => {
+    if (!selectedDate) {
+      alert('Please select a new date and time for rescheduling');
+      return;
+    }
+
+    const meetingData = {
+      date: selectedDate.toISOString(),
+    };
+
+    try {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meetingData),
+      });
+
+      if (response.ok) {
+        alert('Meeting rescheduled successfully!');
+        setSelectedDate(null);
+        setRescheduleAppointmentId(null);
+        const updatedAppointment = await response.json();
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) =>
+            appointment.id === id ? updatedAppointment : appointment
+          )
+        );
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error rescheduling meeting:', error);
+    }
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const showPreviousAppointment = () => {
+    setSlideDirection('left-exit');
+    setTimeout(() => {
+      setCurrentAppointmentIndex((prevIndex) => (prevIndex - 1 + appointments.length) % appointments.length);
+      setSlideDirection('left-enter');
+      setTimeout(() => {
+        setSlideDirection('animate');
+      }, 500); // Duration should match the transition duration in CSS
+    }, 500); // Duration should match the transition duration in CSS
+  };
+
+  const showNextAppointment = () => {
+    setSlideDirection('right-exit');
+    setTimeout(() => {
+      setCurrentAppointmentIndex((prevIndex) => (prevIndex + 1) % appointments.length);
+      setSlideDirection('right-enter');
+      setTimeout(() => {
+        setSlideDirection('animate');
+      }, 500); // Duration should match the transition duration in CSS
+    }, 500); // Duration should match the transition duration in CSS
+  };
+
+  return (
+    <div className="dashboard">
+      <Navbar className="dashboard-navbar" />
+      <div className="dashboard-main">
+        <header className="dashboard-header">
+          <h1 className="dashboard-title">Dashboard</h1>
+        </header>
+        <div className="dashboard-content">
+          <div className="dashboard-calendar">
+            <div className="dashboard-calendar-header">
+              <h2>Your Schedule</h2>
+              <div className="dashboard-calendar-actions">
+                <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
+                <button className="dashboard-action-button">Chat with provider</button>
               </div>
-              <ClassCalendar />
             </div>
-            <div className="dashboard-resources">
-              <h2>Resources</h2>
-              <PregnancyQA />
-            </div>
-            <div className="dashboard-upcoming-appointments">
-              <h2>Upcoming Appointments</h2>
-              <MeetingScheduler section="appointments" />
-            </div>
-            <div className="dashboard-google-maps">
-              <GoogleMapsComponent />
-            </div>
+            <ClassCalendar />
           </div>
-          <div className="dashboard-user-info">
-            {/* User Info section */}
+          <div className="dashboard-resources">
+            <h2>Resources</h2>
+            <PregnancyQA />
+          </div>
+          <div className="dashboard-upcoming-appointments">
+            <h2>
+              Upcoming Appointments <span className="appointments-count">{appointments.length}</span>
+            </h2>
+            <div className="appointments-list">
+  {appointments.length === 0 ? (
+    <p>No upcoming appointments</p>
+  ) : (
+    <>
+      <button onClick={showPreviousAppointment} className="carousel-button carousel-button-left">←</button>
+      <div className={`appointment-item ${slideDirection === 'left-exit' ? 'left-exit' : slideDirection === 'left-enter' ? 'left-enter' : slideDirection === 'right-exit' ? 'right-exit' : slideDirection === 'right-enter' ? 'right-enter' : 'animate'}`}>
+        <h3>{appointments[currentAppointmentIndex].title}</h3>
+        <p>Purpose: {appointments[currentAppointmentIndex].purpose}</p>
+        <p>Doctor: Dr. {appointments[currentAppointmentIndex].doctor.name}</p>
+        <p>Date and Time: {new Date(appointments[currentAppointmentIndex].date).toLocaleString()}</p>
+        <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex].id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
+        <button onClick={() => handleCancel(appointments[currentAppointmentIndex].id)}>Cancel</button>
+        <button onClick={() => setRescheduleAppointmentId(appointments[currentAppointmentIndex].id)}>Reschedule</button>
+        {rescheduleAppointmentId === appointments[currentAppointmentIndex].id && (
+          <div>
+            <label>Reschedule Date and Time:</label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              showTimeSelect
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              minDate={new Date()}
+            />
+            <button onClick={() => handleReschedule(appointments[currentAppointmentIndex].id)}>Confirm Reschedule</button>
+          </div>
+        )}
+      </div>
+      <button onClick={showNextAppointment} className="carousel-button carousel-button-right">→</button>
+    </>
+  )}
+</div>
+          </div>
+          <div className="dashboard-google-maps">
+            <GoogleMapsComponent />
           </div>
         </div>
+        <div className="dashboard-user-info">
+          {/* User Info section */}
+        </div>
       </div>
-    );
-  };
-  
-  export default Dashboard;
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close-button" onClick={closeModal}>&times;</span>
+            <MeetingScheduler closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;
