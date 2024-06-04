@@ -152,36 +152,38 @@ const GoogleMapsComponent = () => {
   }
 
   return (
-    <div>
-      <div style={containerStyle} ref={mapRef}></div>
+    <div className="google-maps-component">
+      <div className="google-maps-container" style={containerStyle} ref={mapRef}></div>
       {selectedPlace && (
-        <div style={{ position: 'absolute', bottom: '10px', left: '10px', background: 'white', padding: '10px', borderRadius: '5px', color: 'black' }}>
-          <h2 style={{ color: 'black' }}>{selectedPlace.name}</h2>
+        <div className="google-maps-selected-place" style={{ position: 'absolute', bottom: '10px', left: '10px', background: 'white', padding: '10px', borderRadius: '5px', color: 'black' }}>
+          <h2 className="google-maps-place-name" style={{ color: 'black' }}>{selectedPlace.name}</h2>
           {selectedPlace.photos && selectedPlace.photos[0] && (
             <img
+              className="google-maps-place-photo"
               src={selectedPlace.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 })}
               alt={selectedPlace.name}
             />
           )}
-          <p style={{ color: 'black' }}>{selectedPlace.vicinity}</p>
+          <p className="google-maps-place-vicinity" style={{ color: 'black' }}>{selectedPlace.vicinity}</p>
           {placeDetails && (
             <>
-              {placeDetails.formatted_phone_number && <p style={{ color: 'black' }}>Phone: {placeDetails.formatted_phone_number}</p>}
-              {placeDetails.formatted_address && <p style={{ color: 'black' }}>Address: {placeDetails.formatted_address}</p>}
+              {placeDetails.formatted_phone_number && <p className="google-maps-place-phone" style={{ color: 'black' }}>Phone: {placeDetails.formatted_phone_number}</p>}
+              {placeDetails.formatted_address && <p className="google-maps-place-address" style={{ color: 'black' }}>Address: {placeDetails.formatted_address}</p>}
               {placeDetails.website && (
-                <p style={{ color: 'black' }}>
+                <p className="google-maps-place-website" style={{ color: 'black' }}>
                   Website: <a href={placeDetails.website} target="_blank" rel="noopener noreferrer">{placeDetails.website}</a>
                 </p>
               )}
               {placeDetails.opening_hours && (
-                <p style={{ color: 'black' }}>
+                <p className="google-maps-place-hours" style={{ color: 'black' }}>
                   Hours: {placeDetails.opening_hours.weekday_text.join(', ')}
                 </p>
               )}
             </>
           )}
-          <button onClick={() => fetchPlaceDetails(selectedPlace.place_id)}>Get Details</button>
+          <button className="google-maps-get-details-button" onClick={() => fetchPlaceDetails(selectedPlace.place_id)}>Get Details</button>
           <a
+            className="google-maps-get-directions"
             href={`https://www.google.com/maps/dir/?api=1&destination=${selectedPlace.geometry.location.lat()},${selectedPlace.geometry.location.lng()}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -189,11 +191,11 @@ const GoogleMapsComponent = () => {
           >
             Get Directions
           </a>
-          <button onClick={() => setSelectedPlace(null)}>Close</button>
+          <button className="google-maps-close-button" onClick={() => setSelectedPlace(null)}>Close</button>
         </div>
       )}
     </div>
   );
 };
-
-export default GoogleMapsComponent;
+  
+  export default GoogleMapsComponent;

@@ -10,6 +10,7 @@ import ClassCalendar from "./components/ClassCalendar";
 import AddClassForm from "./components/AddClassForm";
 import GoogleMapsComponent from "./components/GoogleMapsComponent";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Dashboard from "./components/Dashboard";
 import ChatPage from "./components/ChatPage";
 
 function App() {

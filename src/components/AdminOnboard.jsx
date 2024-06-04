@@ -10,7 +10,7 @@ const AdminOnboard = () => {
     const doctorData = { name, email };
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/admin/doctors?admin_email=torcsh30@gmail.com', {
+      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/admin/doctors?admin_email=torcsh30@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,31 +35,33 @@ const AdminOnboard = () => {
   };
 
   return (
-    <div>
-      <h2>Onboard a New Doctor</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
+    <div className="admin-onboard">
+      <h2 className="admin-onboard-title">Onboard a New Doctor</h2>
+      <form className="admin-onboard-form" onSubmit={handleSubmit}>
+        <div className="admin-onboard-form-group">
+          <label className="admin-onboard-label">Name:</label>
           <input
+            className="admin-onboard-input"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="admin-onboard-form-group">
+          <label className="admin-onboard-label">Email:</label>
           <input
+            className="admin-onboard-input"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Create Doctor</button>
+        <button className="admin-onboard-submit-button" type="submit">Create Doctor</button>
       </form>
     </div>
   );
 };
-
-export default AdminOnboard;
+  
+  export default AdminOnboard;

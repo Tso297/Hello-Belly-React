@@ -41,6 +41,32 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, [db]);
 
+  const fetchZoomToken = async () => {
+    try {
+      const response = await fetch(
+        "https://hello-belly-flask-1.onrender.com/get_zoom_token",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      const accessToken = data.access_token;
+
+      if (accessToken) {
+        setZoomAccessToken(accessToken);
+        localStorage.setItem("zoomAccessToken", accessToken);
+        console.log("Zoom access token received:", accessToken);
+      } else {
+        console.error("Failed to fetch Zoom access token");
+      }
+    } catch (error) {
+      console.error("Error obtaining Zoom token:", error);
+    }
+  };
+
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, Providers.google)
       .then(async (result) => {

@@ -27,7 +27,7 @@ const loadGoogleMapsScript = (apiKey, libraries = []) => {
 
 export const fetchGoogleMapsApiKeyAndLoadScript = (libraries = []) => {
   console.log("Fetching Google Maps API key from server");
-  return fetch('http://localhost:5000/api/google_maps_key', {
+  return fetch('https://hello-belly-flask-1.onrender.com/api/google_maps_key', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
