@@ -1,0 +1,216 @@
+/* General Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center; /* Center child elements horizontally */
+  justify-content: center; /* Center child elements vertically */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 60px; /* Adjust based on your navbar height */
+}
+
+/* Chat Section Styling */
+.newChat,
+.chats {
+  flex: 1;
+  min-width: 300px;
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+}
+
+ul {
+  padding: 0;
+  margin: 0px -20px;
+  list-style-type: none;
+}
+
+li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+li:hover {
+  background-color: #eeeffc;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.chatSender {
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+
+.chatTime {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Selected Chat Section */
+.selectedChat {
+  flex: 1;
+  min-width: 400px;
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+}
+
+/* Chat History */
+.chatHistory {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.messageBubble {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  max-width: 80%;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.messageBubble.sent {
+  background-color: #897dae;
+  color: white;
+  align-self: flex-end;
+}
+
+.messageBubble.received {
+  background-color: #c3c7f3;
+  align-self: flex-start;
+}
+
+.messageTimestamp {
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #999; /* Default color */
+  text-align: right;
+}
+
+.messageBubble.sent .messageTimestamp {
+  color: #cccccc;
+}
+
+.messageBubble.received .messageTimestamp {
+  color: #666666;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input[type="text"],
+form textarea {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+form textarea:focus {
+  border-color: #c3c7f3;
+}
+
+.messageInput {
+  border-radius: 10px;
+}
+
+form button[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #545fdd;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button[type="submit"]:hover {
+  background-color: #4750ba;
+}
+
+.sendButton {
+  width: 400px;
+}
+
+.deleteButton,
+.backButton {
+  display: inline-block;
+  background-color: #545fdd;
+  padding-top: 10px;
+  margin-top: 10px;
+  /* margin-left: 5px;
+  margin-right: 5px; */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  width: 195px;
+}
+
+.deleteButton {
+  background-color: #545fdd;
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+.deleteButton:hover {
+  background-color: #4750ba;
+}
+
+.backButton {
+  background-color: #545fdd;
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+.backButton:hover {
+  background-color: #4750ba;
+}
+
+/* Headings */
+h3 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+h4.chatSubject {
+  text-align: center;
+  color: #555;
+}
+
+.userSearchContainer {
+  text-align: center;
+}
