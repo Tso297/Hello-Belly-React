@@ -1,8 +1,10 @@
+/* General layout */
 .dashboard {
   display: flex;
   height: 100vh;
   font-family: 'Arial', sans-serif;
   color: black;
+  overflow: hidden; /* Ensure no scrolling */
 }
 
 /* Navbar */
@@ -41,8 +43,10 @@
 /* Main Content */
 .dashboard-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2.1fr 0.9fr; /* Adjust column sizes */
+  grid-template-rows: 1fr 1fr;        /* Adjust row sizes */
   grid-gap: 20px;
+  height: 100%; /* Adjust based on header height */
 }
 
 /* Calendar Section */
@@ -52,13 +56,19 @@
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: -100px;
 }
 
 .dashboard-calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px; /* Reduce margin */
 }
 
 .dashboard-calendar-actions {
@@ -70,13 +80,22 @@
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Adjust padding for larger buttons */
   border-radius: 5px;
   cursor: pointer;
+  width: 200px; /* Adjust width for larger buttons */
+  height: 50px; /* Adjust height for larger buttons */
+  font-size: 1em; /* Adjust font size for larger buttons */
 }
 
 .dashboard-action-button:hover {
   background-color: #0056b3;
+}
+
+.calendar-container {
+  flex-grow: 1; /* Ensure the calendar fills the available space */
+  width: 100%;  /* Ensure the calendar fits the div */
+  height: 100%; /* Adjust height to fit content */
 }
 
 /* Resources Section */
@@ -85,46 +104,63 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* PregnancyQA */
-.pregnancy-qa {
-  display: flex;
-  gap: 20px;
-  max-height: 400px;
-  overflow-y: auto;
-  position: relative;
-}
-
-.pregnancy-qa-chat {
-  flex: 1;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  overflow: hidden; /* Ensure the div doesn't stretch */
+  width: 500px; /* Set a fixed width */
+}
+
+.pregnancy-qa-title,
+.pregnancy-qa-answer-title {
+  text-align: center;
 }
 
 .pregnancy-qa-input,
 .pregnancy-qa-ask-button {
+  width: 50%;
   margin-bottom: 10px;
+  margin-left: auto; /* Center the input and button */
+  margin-right: auto; /* Center the input and button */
+  display: block; /* Ensure they are displayed as block elements */
 }
 
-.pregnancy-qa-video-section {
-  flex: 1;
+.pregnancy-qa-answer-section {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 20px; /* Adjust the space between answer and videos */
+}
+
+.pregnancy-qa-videos-section {
+  display: flex;
+  overflow-x: auto; /* Horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks */
+  margin-top: 10px; /* Reduce margin */
+}
+
+.pregnancy-qa-video {
+  display: inline-block; /* Display videos in a row */
+  vertical-align: top;
+  margin-right: 10px;
+  white-space: normal; /* Allow text to wrap */
+  height: 200px; /* Set a consistent height for the video container */
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
 }
 
-.pregnancy-qa-video,
-.pregnancy-qa-sidebar-video {
-  margin-bottom: 10px;
+.pregnancy-qa-video-title {
+  margin: 0;
+  width: 200px; /* Same width as video iframe to align */
+  height: auto; /* Allow height to adjust based on content */
+  white-space: normal; /* Allow text to wrap */
 }
 
-.pregnancy-qa-video iframe,
-.pregnancy-qa-sidebar-video iframe {
-  width: 100%;
-  max-width: 300px; /* Adjust the width as needed */
-  height: auto;
+.pregnancy-qa-video-iframe {
+  width: 200px;
+  height: 150px;
 }
 
 /* Upcoming Appointments Section */
@@ -133,9 +169,15 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
   display: flex;
   flex-direction: column;
   align-items: center; /* Center the content */
+  overflow: hidden;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 100px;
 }
 
 .dashboard-upcoming-appointments h2 {
@@ -163,15 +205,16 @@
   align-items: center;
   justify-content: center; /* Center the appointments */
   position: relative;
+  height: 100%;
 }
 
 .appointment-item {
   background-color: #f8f9fa;
-  padding: 15px;
+  padding: 10px; /* Reduce padding */
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  margin: 0 20px;
+  margin: 0 10px; /* Reduce margin */
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
@@ -223,10 +266,15 @@
 .dashboard-google-maps {
   display: flex-column;
   background-color: white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  overflow: hidden;
+  margin-top: 100px;
+  margin-left: -300px;
 }
 
 /* Centering Popup */
@@ -244,7 +292,6 @@
   bottom: 10px;
   left: 10px;
   background: white;
-  padding: 5px; /* Smaller padding */
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 0.8em; /* Smaller text size */
@@ -252,18 +299,19 @@
 }
 
 .map-legend h3 {
-  margin: 0 0 5px;
-  font-size: 0.9em; /* Smaller heading size */
+  margin: 0px;
+  font-size: 14px; /* Smaller heading size */
 }
 
 .map-legend ul {
   list-style: none;
-  padding: 0;
   margin: 0;
 }
 
 .map-legend li {
-  margin-bottom: 5px;
+  margin-bottom: -15px;
+  font-size: 10px;
+  margin-top: -15px;
 }
 
 .map-legend span {
@@ -343,4 +391,21 @@
   transform: translateX(0);
   opacity: 1;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Floating Buttons */
+.floating-buttons {
+  position: fixed;
+  left: 275px; /* Position to the left, next to the navbar */
+  top: 80.5%; /* Center vertically */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating-buttons .dashboard-action-button {
+  width: 275px; /* Larger buttons */
+  height: 150px; /* Larger buttons */
+  font-size: 1em; /* Larger font size */
 }
