@@ -110,6 +110,7 @@
   flex-direction: column;
   overflow: hidden; /* Ensure the div doesn't stretch */
   width: 500px; /* Set a fixed width */
+  margin-bottom: -100px;
 }
 
 .pregnancy-qa-title,
