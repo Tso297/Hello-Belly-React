@@ -13,15 +13,20 @@
 }
 
 /* Chat Section Styling */
-.newChat,
-.chats {
+
+.newChat {
+  text-align: center;
+  padding: 0;
+}
+
+/* .chats {
   flex: 1;
   min-width: 300px;
   border: 1px solid #eeeffc;
   border-radius: 10px;
   padding: 20px;
   background-color: white;
-}
+} */
 
 ul {
   padding: 0;
@@ -61,7 +66,7 @@ li:hover {
 }
 
 /* Selected Chat Section */
-.selectedChat {
+/* .selectedChat {
   flex: 1;
   min-width: 400px;
   border: 1px solid #eeeffc;
@@ -69,7 +74,7 @@ li:hover {
   padding: 20px;
   background-color: white;
   text-align: center;
-}
+} */
 
 /* Chat History */
 .chatHistory {
@@ -148,7 +153,7 @@ form textarea:focus {
 form button[type="submit"] {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   background-color: #545fdd;
   color: white;
   cursor: pointer;
@@ -169,10 +174,9 @@ form button[type="submit"]:hover {
   background-color: #545fdd;
   padding-top: 10px;
   margin-top: 10px;
-  /* margin-left: 5px;
-  margin-right: 5px; */
+
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   color: white;
   cursor: pointer;
   text-align: center;
@@ -213,4 +217,46 @@ h4.chatSubject {
 
 .userSearchContainer {
   text-align: center;
+}
+
+.chatContainer {
+  display: flex;
+  gap: 10px;
+  margin-left: 360px;
+}
+
+.chats {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px; /* Adjust as needed */
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+}
+
+.chatDetail {
+  flex: 2; /* Adjust the flex value as needed */
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.selectedChat {
+  flex: 1;
+  text-align: center;
+}
+
+.title {
+  margin-top: 50px;
+  margin-left: 360px;
 }

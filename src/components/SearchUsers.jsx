@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { Firebase } from "../firebase";
 import { useAuth } from "./AuthContext";
-import "./searchUsers.css";
+import "../CSS/searchUsers.css";
 
 const db = getFirestore(Firebase);
 
@@ -49,12 +49,12 @@ const SearchUsers = ({ onSelectUser }) => {
   }, [searchTerm, user]);
 
   return (
-    <div>
+    <div className="userSearchContainer">
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search users"
+        placeholder="Search users..."
       />
       <ul>
         {results.map((resultUser) => (
