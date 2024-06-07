@@ -1,0 +1,37 @@
+.meeting-scheduler {
+  margin-left: 360px;
+}
+
+.cancel,
+.reschedule {
+  border-radius: 50px;
+  background-color: #545fdd;
+}
+
+.cancel:hover,
+.reschedule:hover {
+  background-color: #4750ba;
+}
+
+.cancel {
+  margin-right: 5px;
+}
+
+.button-container {
+  text-align: center;
+}
+
+select {
+  padding: 2px 10px;
+  margin-left: 5px;
+}
+
+.meeting-scheduler-appointment-item {
+  padding-top: 0;
+}
+
+.meeting-scheduler-upcoming-title {
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+}

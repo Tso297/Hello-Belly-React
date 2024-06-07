@@ -41,7 +41,6 @@ function App() {
           <Route path="/schedule" element={<MeetingScheduler />} />
           <Route path="/doctor_dashboard" element={<DoctorDashboard />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route path="/chat/:threadId" element={<ChatPage />} />
         </Routes>
       </div>
     </Router>
