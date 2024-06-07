@@ -110,7 +110,7 @@
   flex-direction: column;
   overflow: hidden; /* Ensure the div doesn't stretch */
   width: 500px; /* Set a fixed width */
-  margin-bottom: -100px;
+  margin-bottom: -445px;
 }
 
 .pregnancy-qa-title,
@@ -176,8 +176,8 @@
   flex-direction: column;
   align-items: center; /* Center the content */
   overflow: hidden;
-  margin-left: 300px;
-  margin-right: 300px;
+  margin-left: 200px;
+  margin-right: 400px;
   margin-top: 100px;
 }
 
@@ -275,7 +275,8 @@
   grid-row: 2 / 3;
   overflow: hidden;
   margin-top: 100px;
-  margin-left: -300px;
+  margin-left: -400px;
+  margin-right: 560px;
 }
 
 /* Centering Popup */
@@ -406,7 +407,7 @@
 }
 
 .floating-buttons .dashboard-action-button {
-  width: 275px; /* Larger buttons */
+  width: 150px; /* Larger buttons */
   height: 150px; /* Larger buttons */
   font-size: 1em; /* Larger font size */
 }
