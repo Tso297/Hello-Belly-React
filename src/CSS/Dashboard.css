@@ -142,57 +142,79 @@
   grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Ensure the div doesn't stretch */
-  width: 500px; /* Set a fixed width */
-  margin-bottom: -300px;
-  position: relative; /* To position videos section at the bottom */
+  overflow: hidden;
+  width: 500px;
+  height: 144.5%; /* Ensure the component fills the available space */
 }
 
-.pregnancy-qa-title,
-.pregnancy-qa-answer-title {
+.pregnancy-qa {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.pregnancy-qa-title {
   text-align: center;
+  margin: 0;
 }
 
-.pregnancy-qa-input,
+.pregnancy-qa-input {
+  width: 90%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .pregnancy-qa-ask-button {
+  display: block;
   width: 50%;
-  margin-bottom: 10px;
-  margin-left: auto; /* Center the input and button */
-  margin-right: auto; /* Center the input and button */
-  display: block; /* Ensure they are displayed as block elements */
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.pregnancy-qa-answer-section {
+.pregnancy-qa-ask-button:hover {
+  background-color: #0056b3;
+}
+
+.pregnancy-qa-chat-log {
   flex-grow: 1;
   overflow-y: auto;
   padding-right: 10px;
-  margin-bottom: 20px; /* Adjust the space between answer and videos */
+  margin-bottom: 20px;
 }
 
-.pregnancy-qa-chat-section {
-  flex-grow: 1;
-  overflow-y: auto; /* Enable vertical scrolling */
+.pregnancy-qa-chat-entry {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
 }
 
-/* Move the videos section to the bottom */
 .pregnancy-qa-videos-section {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
-  overflow-x: auto; /* Horizontal scrolling */
-  white-space: nowrap; /* Prevent line breaks */
-  padding-top: 10px; /* Space between videos and above content */
-  margin-top: auto; /* Push the videos section to the bottom */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-top: 10px;
+  margin-top: auto;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .pregnancy-qa-video {
-  display: inline-block; /* Display videos in a row */
+  display: inline-block;
   vertical-align: top;
   margin-right: 10px;
-  white-space: normal; /* Allow text to wrap */
-  height: 200px; /* Set a consistent height for the video container */
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -201,9 +223,9 @@
 .pregnancy-qa-video-title {
   margin: 0;
   font-size: 10px;
-  width: 200px; /* Same width as video iframe to align */
-  height: auto; /* Allow height to adjust based on content */
-  white-space: normal; /* Allow text to wrap */
+  width: 200px;
+  height: auto;
+  white-space: normal;
 }
 
 .pregnancy-qa-video-iframe {
