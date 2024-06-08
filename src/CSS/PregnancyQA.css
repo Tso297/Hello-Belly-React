@@ -1,0 +1,53 @@
+.pregnancy-qa {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.pregnancy-qa-input,
+.pregnancy-qa-ask-button {
+  margin-bottom: 10px;
+}
+
+.pregnancy-qa-answer-section {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.pregnancy-qa-answer-title {
+  margin: 0;
+}
+
+.pregnancy-qa-answer {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.pregnancy-qa-videos-section {
+  margin-top: 20px;
+  overflow-x: auto; /* Horizontal scrolling */
+  display: flex;
+}
+
+.pregnancy-qa-video-container {
+  display: flex;
+  flex-direction: row; /* Ensure videos are in a row */
+  height: auto; /* Keep the height auto */
+}
+
+.pregnancy-qa-video {
+  flex: 0 0 auto; /* Prevent flex items from shrinking */
+  margin-right: 10px;
+}
+
+.pregnancy-qa-video-title {
+  margin: 0;
+}
+
+.pregnancy-qa-video-iframe {
+  width: 200px;
+  height: 150px;
+}

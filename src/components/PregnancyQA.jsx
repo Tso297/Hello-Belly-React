@@ -6,36 +6,20 @@ const PregnancyQA = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [videos, setVideos] = useState([]);
-  const [sidebarVideos, setSidebarVideos] = useState([]);
-
-  useEffect(() => {
-    const fetchSidebarVideos = async () => {
-      try {
-        const response = await fetch('https://hello-belly-flask-1.onrender.com/api/youtube?query=pregnancy tips');
-        const data = await response.json();
-        console.log('Sidebar Videos:', data.videos);  // Debugging
-        setSidebarVideos(data.videos);
-      } catch (error) {
-        console.error('Error fetching sidebar videos:', error);
-      }
-    };
-
-    fetchSidebarVideos();
-  }, []);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
   };
 
   const handleAskQuestion = async () => {
-    console.log('Asking question:', question); // Debugging
+    console.log('Asking question:', question);
 
     // Fetch YouTube videos
     try {
       const videoResponse = await fetch(`https://hello-belly-flask-1.onrender.com/api/youtube?query=${question}`);
       if (videoResponse.ok) {
         const videoData = await videoResponse.json();
-        console.log('Fetched Videos:', videoData.videos);  // Debugging
+        console.log('Fetched Videos:', videoData.videos);
         setVideos(videoData.videos);
       } else {
         console.error('Error fetching videos');
@@ -57,7 +41,7 @@ const PregnancyQA = () => {
       if (response.ok) {
         const data = await response.json();
         setAnswer(data.answer);
-        console.log('Fetched answer:', data.answer); // Debugging
+        console.log('Fetched answer:', data.answer);
       } else {
         const errorData = await response.json();
         console.error('Error fetching answer:', errorData);
@@ -69,7 +53,7 @@ const PregnancyQA = () => {
 
   return (
     <div className="pregnancy-qa">
-      <h2 className="pregnancy-qa-title">Pregnancy Q&A</h2>
+      <h2 className="pregnancy-qa-title">Resources</h2>
       <input
         className="pregnancy-qa-input"
         type="text"
@@ -83,34 +67,12 @@ const PregnancyQA = () => {
         <p className="pregnancy-qa-answer">{answer}</p>
       </div>
       <div className="pregnancy-qa-videos-section">
-        <h3 className="pregnancy-qa-videos-title">Relevant Videos</h3>
         {videos.map((video) => (
           <div className="pregnancy-qa-video" key={video.id}>
             <h4 className="pregnancy-qa-video-title">{video.title}</h4>
             <iframe
               className="pregnancy-qa-video-iframe"
-              width="560"
-              height="315"
               src={`https://www.youtube.com/embed/${video.id}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={video.title}
-            ></iframe>
-          </div>
-        ))}
-      </div>
-      <div className="pregnancy-qa-sidebar-videos-section">
-        <h3 className="pregnancy-qa-sidebar-videos-title">Pregnancy Tips Videos</h3>
-        {sidebarVideos.map((video) => (
-          <div className="pregnancy-qa-sidebar-video" key={video.id}>
-            <h4 className="pregnancy-qa-sidebar-video-title">{video.title}</h4>
-            <iframe
-              className="pregnancy-qa-sidebar-video-iframe"
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${video.id}`}
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title={video.title}
@@ -121,5 +83,5 @@ const PregnancyQA = () => {
     </div>
   );
 };
-  
-  export default PregnancyQA;
+
+export default PregnancyQA;

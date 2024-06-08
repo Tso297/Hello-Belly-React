@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import Navbar from './Navbar';
 import ClassCalendar from './ClassCalendar'; // Assuming this combines appointments and classes
 import PregnancyQA from './PregnancyQA'; // Chatbox and videos related to the chat topic
@@ -131,22 +129,16 @@ const Dashboard = () => {
     <div className="dashboard">
       <Navbar className="dashboard-navbar" />
       <div className="dashboard-main">
-        <header className="dashboard-header">
-          <h1 className="dashboard-title">Dashboard</h1>
-        </header>
         <div className="dashboard-content">
           <div className="dashboard-calendar">
             <div className="dashboard-calendar-header">
               <h2>Your Schedule</h2>
               <div className="dashboard-calendar-actions">
-                <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
-                <button className="dashboard-action-button">Chat with provider</button>
               </div>
             </div>
             <ClassCalendar />
           </div>
           <div className="dashboard-resources">
-            <h2>Resources</h2>
             <PregnancyQA />
           </div>
           <div className="dashboard-upcoming-appointments">
@@ -203,6 +195,10 @@ const Dashboard = () => {
         <div className="dashboard-user-info">
           {/* User Info section */}
         </div>
+        <div className="floating-buttons">
+        <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
+          <button className="dashboard-action-button">Chat with provider</button>
+        </div>
       </div>
       {isModalOpen && (
         <div className="modal">
@@ -213,7 +209,7 @@ const Dashboard = () => {
         </div>
       )}
       {selectedPlace && (
-        <div className="google-maps-selected-place">
+        <div className="info-window">
           <h2>{selectedPlace.name}</h2>
           {selectedPlace.photos && selectedPlace.photos[0] && (
             <img

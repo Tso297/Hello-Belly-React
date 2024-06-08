@@ -34,6 +34,7 @@ function App() {
               </ErrorBoundary>
             }
           />
+          <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Classes" element={<ClassCalendar />} />
           <Route path="/AddClasses" element={<AddClassForm />} />
           <Route path="/FAQ" element={<PregnancyQA />} />
