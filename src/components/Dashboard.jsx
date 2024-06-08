@@ -4,11 +4,13 @@ import ClassCalendar from './ClassCalendar'; // Assuming this combines appointme
 import PregnancyQA from './PregnancyQA'; // Chatbox and videos related to the chat topic
 import GoogleMapsComponent from './GoogleMapsComponent';
 import MeetingScheduler from './MeetingScheduler';
+import ChatPage from './ChatPage'; // Import ChatPage
 import { useZoom } from './ZoomContext';
 import '../CSS/Dashboard.css';
 
 const Dashboard = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isChatModalOpen, setChatModalOpen] = useState(false); // State for chat modal
   const { user, appointments, setAppointments } = useZoom();
   const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -18,6 +20,9 @@ const Dashboard = () => {
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const openChatModal = () => setChatModalOpen(true);
+  const closeChatModal = () => setChatModalOpen(false);
 
   useEffect(() => {
     if (user) {
@@ -138,7 +143,7 @@ const Dashboard = () => {
               <ul className="calendar-legend">
                 <li><span className="appointments-marker"></span></li>
                 <li><span className="classes-marker"></span></li>
-                </ul>
+              </ul>
             </div>
             <ClassCalendar />
           </div>
@@ -201,7 +206,7 @@ const Dashboard = () => {
         </div>
         <div className="floating-buttons">
           <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
-          <button className="dashboard-action-button">Chat with provider</button>
+          <button className="dashboard-action-button" onClick={openChatModal}>Chat with provider</button>
         </div>
       </div>
       {isModalOpen && (
@@ -209,6 +214,14 @@ const Dashboard = () => {
           <div className="modal-content">
             <span className="close-button" onClick={closeModal}>&times;</span>
             <MeetingScheduler closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+      {isChatModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close-button" onClick={closeChatModal}>&times;</span>
+            <ChatPage closeModal={closeChatModal} />
           </div>
         </div>
       )}

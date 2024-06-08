@@ -43,23 +43,14 @@ const Navbar = () => {
         <Link className="navbar-link" to="/Dashboard">
           Dashboard
         </Link>
-        <Link className="navbar-link" to="/FAQ">
-          FAQ
-        </Link>
-        <Link className="navbar-link" to="/Classes">
-          Classes
-        </Link>
-        <Link className="navbar-link" to="/AddClasses">
-          Add Classes
-        </Link>
-        <Link className="navbar-link" to="/GoogleMaps">
-          Maps
-        </Link>
         {user && (
           <Link className="navbar-link" to="/chat">
             Messaging
           </Link>
         )}
+        <Link className="navbar-link" to="/AddClasses">
+          Add Classes
+        </Link>
         {user && user.email === "torcsh30@gmail.com" && (
           <>
             {" "}
@@ -81,9 +72,6 @@ const Navbar = () => {
         {user ? (
           <div className="navbar-user-info">
             <span className="navbar-user-name">{user.displayName}</span>
-            <button className="navbar-button" onClick={handleCreateMeeting}>
-              Schedule a Meeting
-            </button>
             <button className="navbar-button" onClick={handleSignOut}>
               Sign Out
             </button>
