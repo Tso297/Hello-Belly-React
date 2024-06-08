@@ -3,6 +3,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { Box } from '@mui/material';
+import { useZoom } from './ZoomContext';
+import '../CSS/ClassCalendar.css';
 
 // Helper function to get the next date for a given day of the week
 const getNextDateForDay = (dayOfWeek, time) => {
@@ -21,7 +23,8 @@ const getNextDateForDay = (dayOfWeek, time) => {
 };
 
 const ClassCalendar = () => {
-  const [classes, setClasses] = useState([]);
+  const [events, setEvents] = useState([]);
+  const { user, appointments } = useZoom();
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -33,7 +36,7 @@ const ClassCalendar = () => {
         const data = await response.json();
         console.log('Fetched classes:', data); // Debugging line
 
-        const events = data.flatMap(cls => {
+        const classEvents = data.flatMap(cls => {
           const nextDate = getNextDateForDay(cls.day_of_week, cls.time);
           const eventsArray = [];
 
@@ -46,7 +49,8 @@ const ClassCalendar = () => {
               end: new Date(nextDate),
               extendedProps: {
                 link: cls.link,
-              }
+              },
+              color: 'blue', // Set color for classes
             };
             eventsArray.push(event);
             nextDate.setDate(nextDate.getDate() + 7); // Increment by 7 days for weekly recurrence
@@ -54,8 +58,8 @@ const ClassCalendar = () => {
 
           return eventsArray;
         });
-        console.log('Processed events:', events); // Debugging line
-        setClasses(events);
+        console.log('Processed class events:', classEvents); // Debugging line
+        setEvents(prevEvents => [...prevEvents, ...classEvents]);
       } catch (error) {
         console.error('Error fetching classes:', error);
       }
@@ -64,12 +68,28 @@ const ClassCalendar = () => {
     fetchClasses();
   }, []);
 
+  useEffect(() => {
+    if (user && appointments) {
+      const appointmentEvents = appointments.map(appt => ({
+        id: appt.id,
+        title: appt.purpose,
+        start: new Date(appt.date),
+        end: new Date(appt.date),
+        extendedProps: {
+          link: appt.link,
+        },
+        color: 'purple', // Set color for appointments
+      }));
+      setEvents(prevEvents => [...prevEvents, ...appointmentEvents]);
+    }
+  }, [user, appointments]);
+
   return (
     <Box className="class-calendar" sx={{ display: 'flex', flexDirection: 'column' }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
-        events={classes}
+        events={events}
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
@@ -80,7 +100,12 @@ const ClassCalendar = () => {
         }}
         style={{ flexGrow: 1, width: '100%' }}
       />
+      <Box className="calendar-legend" sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <span style={{ color: 'blue', marginRight: '10px' }}>■ Group Classes</span>
+        <span style={{ color: 'purple' }}>■ Appointments</span>
+      </Box>
     </Box>
   );
 };
-  export default ClassCalendar;
+
+export default ClassCalendar;

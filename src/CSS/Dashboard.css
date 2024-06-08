@@ -61,14 +61,19 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin-bottom: -100px;
+  margin-bottom: 535px;
+  height: 100%; /* Ensure the calendar fills the available space */
 }
 
 .dashboard-calendar-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center the header content */
   align-items: center;
-  margin-bottom: 10px; /* Reduce margin */
+}
+
+.dashboard-calendar-header h2 {
+  font-size: 1.4em;
+  margin: 0; /* Remove margin */
 }
 
 .dashboard-calendar-actions {
@@ -95,8 +100,37 @@
 .calendar-container {
   flex-grow: 1; /* Ensure the calendar fills the available space */
   width: 100%;  /* Ensure the calendar fits the div */
-  height: 100%; /* Adjust height to fit content */
+  height: calc(100% - 40px); /* Adjust height to fit content, considering header height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.calendar-legend {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 10%;
+  left: 18%;
+  transform: translateY(-50%);
+}
+
+.legend-box {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+
+.legend-appointments {
+  background-color: purple;
+}
+
+.legend-classes {
+  background-color: blue;
+}
+
+
 
 /* Resources Section */
 .dashboard-resources {
@@ -110,7 +144,8 @@
   flex-direction: column;
   overflow: hidden; /* Ensure the div doesn't stretch */
   width: 500px; /* Set a fixed width */
-  margin-bottom: -445px;
+  margin-bottom: -300px;
+  position: relative; /* To position videos section at the bottom */
 }
 
 .pregnancy-qa-title,
@@ -134,11 +169,22 @@
   margin-bottom: 20px; /* Adjust the space between answer and videos */
 }
 
+.pregnancy-qa-chat-section {
+  flex-grow: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Move the videos section to the bottom */
 .pregnancy-qa-videos-section {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   overflow-x: auto; /* Horizontal scrolling */
   white-space: nowrap; /* Prevent line breaks */
-  margin-top: 10px; /* Reduce margin */
+  padding-top: 10px; /* Space between videos and above content */
+  margin-top: auto; /* Push the videos section to the bottom */
 }
 
 .pregnancy-qa-video {
@@ -154,6 +200,7 @@
 
 .pregnancy-qa-video-title {
   margin: 0;
+  font-size: 10px;
   width: 200px; /* Same width as video iframe to align */
   height: auto; /* Allow height to adjust based on content */
   white-space: normal; /* Allow text to wrap */
@@ -167,7 +214,7 @@
 /* Upcoming Appointments Section */
 .dashboard-upcoming-appointments {
   background-color: white;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   grid-column: 1 / 2;
@@ -178,7 +225,7 @@
   overflow: hidden;
   margin-left: 200px;
   margin-right: 400px;
-  margin-top: 100px;
+  margin-top: 40px;
 }
 
 .dashboard-upcoming-appointments h2 {
@@ -187,6 +234,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: -20px;
+}
+
+.dashboard-appointments-header {
+  margin-top: 5px;
 }
 
 .appointments-count {
@@ -207,11 +259,12 @@
   justify-content: center; /* Center the appointments */
   position: relative;
   height: 100%;
+  margin-top: 15px;
 }
 
 .appointment-item {
   background-color: #f8f9fa;
-  padding: 10px; /* Reduce padding */
+  padding: 0px; /* Reduce padding */
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   max-width: 500px;
@@ -220,7 +273,7 @@
 }
 
 .appointment-item h3 {
-  margin-top: 0;
+  margin-top: -10px;
 }
 
 .appointment-item button {
@@ -256,11 +309,11 @@
 }
 
 .carousel-button-left {
-  left: -30px;
+  left: -50px;
 }
 
 .carousel-button-right {
-  right: -30px;
+  right: -50px;
 }
 
 /* Google Maps Section */
@@ -274,7 +327,7 @@
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 40px;
   margin-left: -400px;
   margin-right: 560px;
 }
@@ -398,7 +451,8 @@
 /* Floating Buttons */
 .floating-buttons {
   position: fixed;
-  left: 275px; /* Position to the left, next to the navbar */
+  margin-top: 45px;
+  left: 285px; /* Position to the left, next to the navbar */
   top: 80.5%; /* Center vertically */
   transform: translateY(-50%);
   display: flex;
@@ -408,6 +462,6 @@
 
 .floating-buttons .dashboard-action-button {
   width: 150px; /* Larger buttons */
-  height: 150px; /* Larger buttons */
+  height: 100px; /* Larger buttons */
   font-size: 1em; /* Larger font size */
 }

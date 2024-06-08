@@ -135,6 +135,10 @@ const Dashboard = () => {
               <h2>Your Schedule</h2>
               <div className="dashboard-calendar-actions">
               </div>
+              <ul className="calendar-legend">
+                <li><span className="appointments-marker"></span></li>
+                <li><span className="classes-marker"></span></li>
+                </ul>
             </div>
             <ClassCalendar />
           </div>
@@ -142,7 +146,7 @@ const Dashboard = () => {
             <PregnancyQA />
           </div>
           <div className="dashboard-upcoming-appointments">
-            <h2>
+            <h2 className="dashboard-appointments-header">
               Upcoming Appointments <span className="appointments-count">{appointments.length}</span>
             </h2>
             <div className="appointments-list">
@@ -196,7 +200,7 @@ const Dashboard = () => {
           {/* User Info section */}
         </div>
         <div className="floating-buttons">
-        <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
+          <button className="dashboard-action-button" onClick={openModal}>Schedule a call</button>
           <button className="dashboard-action-button">Chat with provider</button>
         </div>
       </div>
