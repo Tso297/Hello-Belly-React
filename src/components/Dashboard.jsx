@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-import ClassCalendar from './ClassCalendar'; // Assuming this combines appointments and classes
-import PregnancyQA from './PregnancyQA'; // Chatbox and videos related to the chat topic
+import ClassCalendar from './ClassCalendar';
+import PregnancyQA from './PregnancyQA';
 import GoogleMapsComponent from './GoogleMapsComponent';
 import MeetingScheduler from './MeetingScheduler';
-import ChatPage from './ChatPage'; // Import ChatPage
+import ChatPage from './ChatPage';
+import DatePicker from 'react-datepicker';
 import { useZoom } from './ZoomContext';
 import '../CSS/Dashboard.css';
 
 const Dashboard = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isChatModalOpen, setChatModalOpen] = useState(false); // State for chat modal
+  const [isChatModalOpen, setChatModalOpen] = useState(false);
+  const [isRescheduleModalOpen, setRescheduleModalOpen] = useState(false);
   const { user, appointments, setAppointments } = useZoom();
-  const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null);
+  const [rescheduleAppointment, setRescheduleAppointment] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [availableSlots, setAvailableSlots] = useState([]);
   const [currentAppointmentIndex, setCurrentAppointmentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('');
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -24,26 +27,57 @@ const Dashboard = () => {
   const openChatModal = () => setChatModalOpen(true);
   const closeChatModal = () => setChatModalOpen(false);
 
-  useEffect(() => {
-    if (user) {
-      const fetchAppointments = async () => {
-        try {
-          const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments?email=${user.email}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          const data = await response.json();
-          setAppointments(data.appointments);
-        } catch (error) {
-          console.error('Error fetching appointments:', error);
-        }
-      };
+  const openRescheduleModal = (appointment) => {
+    setRescheduleAppointment(appointment);
+    setSelectedDate(new Date(appointment.date));
+    setRescheduleModalOpen(true);
+    fetchAvailableSlots(appointment.doctor.id, new Date(appointment.date));
+  };
 
-      fetchAppointments();
+  const closeRescheduleModal = () => {
+    setRescheduleModalOpen(false);
+    setRescheduleAppointment(null);
+    setSelectedDate(null);
+    setAvailableSlots([]);
+  };
+
+  const fetchAvailableSlots = async (doctorId, date) => {
+    try {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/available_slots?doctor_id=${doctorId}&date=${date.toISOString().split('T')[0]}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      const availableDates = data.available_slots.map(slot => new Date(slot));
+      setAvailableSlots(availableDates);
+    } catch (error) {
+      console.error('Error fetching available slots:', error);
+      setAvailableSlots([]);
     }
-  }, [user, setAppointments]);
+  };
+
+  const fetchAppointments = async () => {
+    if (user) {
+      try {
+        const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments?email=${user.email}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        setAppointments(data.appointments);
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchAppointments();
+  }, [user]);
 
   const handleCancel = async (id) => {
     try {
@@ -56,8 +90,7 @@ const Dashboard = () => {
 
       if (response.ok) {
         alert('Meeting canceled successfully!');
-        setAppointments((prevAppointments) => prevAppointments.filter((appointment) => appointment.id !== id));
-        setCurrentAppointmentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        fetchAppointments();
       } else {
         alert('Error canceling meeting');
       }
@@ -66,7 +99,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleReschedule = async (id) => {
+  const handleReschedule = async () => {
     if (!selectedDate) {
       alert('Please select a new date and time for rescheduling');
       return;
@@ -77,7 +110,7 @@ const Dashboard = () => {
     };
 
     try {
-      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${id}`, {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/appointments/${rescheduleAppointment.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,14 +120,8 @@ const Dashboard = () => {
 
       if (response.ok) {
         alert('Meeting rescheduled successfully!');
-        setSelectedDate(null);
-        setRescheduleAppointmentId(null);
-        const updatedAppointment = await response.json();
-        setAppointments((prevAppointments) =>
-          prevAppointments.map((appointment) =>
-            appointment.id === id ? updatedAppointment : appointment
-          )
-        );
+        fetchAppointments();
+        closeRescheduleModal();
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
@@ -115,8 +142,8 @@ const Dashboard = () => {
       setSlideDirection('left-enter');
       setTimeout(() => {
         setSlideDirection('animate');
-      }, 500); // Duration should match the transition duration in CSS
-    }, 500); // Duration should match the transition duration in CSS
+      }, 500);
+    }, 500);
   };
 
   const showNextAppointment = () => {
@@ -126,8 +153,8 @@ const Dashboard = () => {
       setSlideDirection('right-enter');
       setTimeout(() => {
         setSlideDirection('animate');
-      }, 500); // Duration should match the transition duration in CSS
-    }, 500); // Duration should match the transition duration in CSS
+      }, 500);
+    }, 500);
   };
 
   return (
@@ -161,28 +188,13 @@ const Dashboard = () => {
                 <>
                   <button onClick={showPreviousAppointment} className="carousel-button carousel-button-left">←</button>
                   <div className={`appointment-item ${slideDirection === 'left-exit' ? 'left-exit' : slideDirection === 'left-enter' ? 'left-enter' : slideDirection === 'right-exit' ? 'right-exit' : slideDirection === 'right-enter' ? 'right-enter' : 'animate'}`}>
-                    <h3>{appointments[currentAppointmentIndex].title}</h3>
-                    <p>Date and Time: {new Date(appointments[currentAppointmentIndex].date).toLocaleString()}</p>
-                    <p>Purpose: {appointments[currentAppointmentIndex].purpose}</p>
-                    <p>Doctor: Dr. {appointments[currentAppointmentIndex].doctor.name}</p>
-                    <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex].id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
-                    <button onClick={() => handleCancel(appointments[currentAppointmentIndex].id)}>Cancel</button>
-                    <button onClick={() => setRescheduleAppointmentId(appointments[currentAppointmentIndex].id)}>Reschedule</button>
-                    {rescheduleAppointmentId === appointments[currentAppointmentIndex].id && (
-                      <div>
-                        <label>Reschedule Date and Time:</label>
-                        <DatePicker
-                          selected={selectedDate}
-                          onChange={handleDateChange}
-                          showTimeSelect
-                          timeIntervals={30}
-                          timeCaption="Time"
-                          dateFormat="MMMM d, yyyy h:mm aa"
-                          minDate={new Date()}
-                        />
-                        <button onClick={() => handleReschedule(appointments[currentAppointmentIndex].id)}>Confirm Reschedule</button>
-                      </div>
-                    )}
+                    <h3>{appointments[currentAppointmentIndex]?.title}</h3>
+                    <p>Date and Time: {appointments[currentAppointmentIndex]?.date ? new Date(appointments[currentAppointmentIndex]?.date).toLocaleString() : 'N/A'}</p>
+                    <p>Purpose: {appointments[currentAppointmentIndex]?.purpose}</p>
+                    <p>Doctor: Dr. {appointments[currentAppointmentIndex]?.doctor?.name}</p>
+                    <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex]?.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
+                    <button onClick={() => handleCancel(appointments[currentAppointmentIndex]?.id)}>Cancel</button>
+                    <button onClick={() => openRescheduleModal(appointments[currentAppointmentIndex])}>Reschedule</button>
                   </div>
                   <button onClick={showNextAppointment} className="carousel-button carousel-button-right">→</button>
                 </>
@@ -222,6 +234,27 @@ const Dashboard = () => {
           <div className="modal-content">
             <span className="close-button" onClick={closeChatModal}>&times;</span>
             <ChatPage closeModal={closeChatModal} />
+          </div>
+        </div>
+      )}
+      {isRescheduleModalOpen && rescheduleAppointment && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close-button" onClick={closeRescheduleModal}>&times;</span>
+            <h2>Reschedule Appointment</h2>
+            <p>Current Date and Time: {new Date(rescheduleAppointment.date).toLocaleString()}</p>
+            <label>New Date and Time:</label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              showTimeSelect
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              minDate={new Date()}
+              includeTimes={availableSlots}
+            />
+            <button onClick={handleReschedule}>Confirm Reschedule</button>
           </div>
         </div>
       )}

@@ -4,6 +4,7 @@ import '../CSS/Admin.css';
 
 const Admin = () => {
   const [doctors, setDoctors] = useState([]);
+  const [doctorToUpdate, setDoctorToUpdate] = useState({ id: '', name: '', email: '' });
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -24,6 +25,50 @@ const Admin = () => {
     fetchDoctors();
   }, []);
 
+  const handleUpdateDoctor = async () => {
+    try {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/doctors/${doctorToUpdate.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(doctorToUpdate),
+      });
+
+      if (response.ok) {
+        alert('Doctor updated successfully!');
+        setDoctors(doctors.map(doc => doc.id === doctorToUpdate.id ? doctorToUpdate : doc));
+        setDoctorToUpdate({ id: '', name: '', email: '' });
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error updating doctor:', error);
+    }
+  };
+
+  const handleDeleteDoctor = async (id) => {
+    try {
+      const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/doctors/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        alert('Doctor deleted successfully!');
+        setDoctors(doctors.filter(doc => doc.id !== id));
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error deleting doctor:', error);
+    }
+  };
+
   return (
     <div className="admin-container">
       <h1>Admin Dashboard</h1>
@@ -32,14 +77,21 @@ const Admin = () => {
           <AddClassForm />
         </div>
         <div className="admin-section onboard-doctor">
-          <AdminOnboard doctors={doctors} setDoctors={setDoctors} />
+          <AdminOnboard
+            doctors={doctors}
+            setDoctors={setDoctors}
+            doctorToUpdate={doctorToUpdate}
+            setDoctorToUpdate={setDoctorToUpdate}
+            handleUpdateDoctor={handleUpdateDoctor}
+            handleDeleteDoctor={handleDeleteDoctor}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-const AdminOnboard = ({ doctors, setDoctors }) => {
+const AdminOnboard = ({ doctors, setDoctors, doctorToUpdate, setDoctorToUpdate, handleUpdateDoctor, handleDeleteDoctor }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -101,9 +153,37 @@ const AdminOnboard = ({ doctors, setDoctors }) => {
           <li className="existing-doctor-item" key={doctor.id}>
             <h3 className="existing-doctor-name">{doctor.name}</h3>
             <p className="existing-doctor-email">Email: {doctor.email}</p>
+            <button onClick={() => setDoctorToUpdate({ id: doctor.id, name: doctor.name, email: doctor.email })}>Update</button>
+            <button onClick={() => handleDeleteDoctor(doctor.id)}>Delete</button>
           </li>
         ))}
       </ul>
+      {doctorToUpdate.id && (
+        <div className="update-doctor-form">
+          <h2>Update Doctor</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdateDoctor();
+          }}>
+            <input
+              type="text"
+              value={doctorToUpdate.name}
+              onChange={(e) => setDoctorToUpdate({ ...doctorToUpdate, name: e.target.value })}
+              placeholder="Name"
+              required
+            />
+            <input
+              type="email"
+              value={doctorToUpdate.email}
+              onChange={(e) => setDoctorToUpdate({ ...doctorToUpdate, email: e.target.value })}
+              placeholder="Email"
+              required
+            />
+            <button type="submit">Update</button>
+            <button onClick={() => setDoctorToUpdate({ id: '', name: '', email: '' })}>Cancel</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

@@ -24,15 +24,21 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className="navbar"
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "1rem",
-      }}
-    >
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <img src="https://res.cloudinary.com/dhgpf6985/image/upload/v1718137984/Group_3_1_g9ar16.png" alt="Logo" className="colored-logo" />
+      </div>
+      <div className="navbar-user-welcome">
+        {user ? (
+          <div className="navbar-user-info">
+            <span className="navbar-user-name">Welcome, {user.displayName}!</span>
+          </div>
+        ) : (
+          <button className="navbar-button" onClick={handleGoogleSignIn}>
+            Sign In with Google
+          </button>
+        )}
+      </div>
       <div className="navbar-links">
         <Link className="navbar-link" to="/">
           Home
@@ -52,36 +58,21 @@ const Navbar = () => {
           </Link>
         )}
         {user && user.email === "torcsh30@gmail.com" && (
-          <>
-            {" "}
-            <Link className="navbar-link" to="/Admin">
-              Admin Page
-            </Link>
-          </>
+          <Link className="navbar-link" to="/Admin">
+            Admin Page
+          </Link>
         )}
         {isDoctor && (
-          <>
-            {" "}
-            <Link className="navbar-link" to="/doctor_dashboard">
-              Doctor Dashboard
-            </Link>
-          </>
+          <Link className="navbar-link" to="/doctor_dashboard">
+            Doctor Dashboard
+          </Link>
         )}
       </div>
-      <div className="navbar-user-actions">
-        {user ? (
-          <div className="navbar-user-info">
-            <span className="navbar-user-name">{user.displayName}</span>
-            <button className="navbar-button" onClick={handleSignOut}>
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <button className="navbar-button" onClick={handleGoogleSignIn}>
-            Sign In with Google
-          </button>
-        )}
-      </div>
+      {user && (
+        <button className="navbar-button" onClick={handleSignOut}>
+          Sign Out
+        </button>
+      )}
     </nav>
   );
 };

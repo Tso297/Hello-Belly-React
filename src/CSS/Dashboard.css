@@ -2,8 +2,8 @@
 .dashboard {
   display: flex;
   height: 100vh;
-  font-family: 'Arial', sans-serif;
   color: black;
+  background-color: #ffe6e6;
 }
 
 /* Navbar */
@@ -50,7 +50,7 @@
 
 /* Calendar Section */
 .dashboard-calendar {
-  background-color: white;
+  background-color: #f0f8ff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -133,7 +133,7 @@
 
 /* Resources Section */
 .dashboard-resources {
-  background-color: white;
+  background-color: #f0f8ff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -234,7 +234,7 @@
 
 /* Upcoming Appointments Section */
 .dashboard-upcoming-appointments {
-  background-color: white;
+  background-color: #f0f8ff;
   padding: 0px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -243,7 +243,6 @@
   display: flex;
   flex-direction: column;
   align-items: center; /* Center the content */
-  overflow: hidden;
   margin-left: 200px;
   margin-right: 400px;
   margin-top: 40px;
@@ -312,7 +311,7 @@
 }
 
 .appointments-list > .carousel-button {
-  background-color: #d3d3d3; /* Light gray background */
+  background-color: #007bff;
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -325,8 +324,7 @@
 }
 
 .appointments-list > .carousel-button:hover {
-  background-color: #a9a9a9; /* Darker gray on hover */
-  color: black;
+  background-color: #0056b3; /* Darker gray on hover */
 }
 
 .carousel-button-left {
@@ -340,14 +338,13 @@
 /* Google Maps Section */
 .dashboard-google-maps {
   display: flex-column;
-  background-color: white;
+  background-color: #f0f8ff;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-  overflow: hidden;
   margin-top: 40px;
   margin-left: -400px;
   margin-right: 560px;

@@ -84,7 +84,7 @@
     margin-bottom: 10px;
     border-radius: 5px; /* Add border radius for a smoother look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to make them pop out */
-    background-color: #f8f8f8; /* Light background color for better contrast */
+    background-color: #ffe6e6; /* Light background color for better contrast */
   }
   
   .existing-class-item h3, .existing-class-item p, .existing-doctor-item h3, .existing-doctor-item p {

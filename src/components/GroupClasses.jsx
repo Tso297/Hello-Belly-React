@@ -11,6 +11,7 @@ const GroupClasses = () => {
       <p className="group-classes-overview">
         Whether you are looking to learn about prenatal nutrition, master the art of swaddling, or practice prenatal yoga, our classes offer something for everyone. Join our community, connect with other expecting mothers, and learn from experts in a supportive, engaging environment.
       </p>
+      <h1 className="group-classes-header">Please use your dashboard calendar to join at the specified times!</h1>
 
       <div className="class-item image-left">
         <img className="class-image" src="https://res.cloudinary.com/dhgpf6985/image/upload/v1718046727/Infant_Childcare_luttab.jpg" alt="Infant Childcare" />

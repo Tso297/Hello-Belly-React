@@ -1,10 +1,11 @@
-nav {
+/* General layout */
+.navbar {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 1rem;
-  background-color: #f8f9fa;
+  background-color: white; /* Light pink background */
   border-right: 1px solid #dee2e6;
   position: fixed;
   top: 0;
@@ -15,34 +16,53 @@ nav {
   z-index: 1000;
 }
 
-nav div {
+.navbar-logo img {
+  width: 150px; /* Adjust the logo size as needed */
+  margin-bottom: 20px;
+  filter: invert(38%) sepia(94%) saturate(2029%) hue-rotate(196deg) brightness(99%) contrast(101%);
+}
+
+.navbar-links {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-nav div a {
+.navbar-links a {
   margin-bottom: 20px;
   text-decoration: none;
-  color: #007bff;
+  color: #007bff; /* Blue text */
   transition: color 0.15s ease-in-out;
 }
 
-nav div a:hover {
-  color: #0056b3;
+.navbar-links a:hover {
+  color: #0056b3; /* Darker blue on hover */
 }
 
-button {
+.navbar-button {
   padding: 8px 16px;
   border: none;
-  background-color: #007bff;
+  background-color: #007bff; /* Blue background */
   color: white;
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.15s ease-in-out;
   margin-bottom: 10px; /* Add margin-bottom to buttons to space them out */
+  width: 150px;
 }
 
-button:hover {
-  background-color: #0056b3;
+.navbar-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.navbar-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar-user-name {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-style: italic;
 }
