@@ -1,0 +1,92 @@
+.admin-container {
+    margin-left: 180px; /* Account for the left-side navbar */
+    padding: 20px;
+    background-color: #f0f8ff; /* Light blue background for a calming effect */
+    min-height: 100vh;
+    width: calc(100% - 57px); /* Ensure it fills the available space */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    color: #000; /* Make all text black */
+  }
+  
+  .admin-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #000; /* Make heading text black */
+  }
+  
+  .admin-sections {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .admin-section.add-class {
+    width: 700px; /* Set width for AddClassForm */
+    margin-right: 40px; /* Move to the right */
+  }
+  
+  .admin-section.onboard-doctor {
+    width: 700px; /* Set width for AdminOnboard */
+    margin-left: 40px; /* Move to the left */
+  }
+  
+  .admin-section {
+    padding: 20px;
+    background-color: #fff; /* White background for sections */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-class-title, .existing-classes-title, .admin-onboard-title, .existing-doctors-title {
+    color: #000; /* Make section titles black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-class-form-element, .admin-onboard-form {
+    color: #000; /* Make form text black */
+  }
+  
+  .admin-onboard-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+  }
+  
+  .admin-onboard-submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .admin-onboard-submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .existing-classes-list, .existing-doctors-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 900px; /* Center the list and limit its width */
+  }
+  
+  .existing-class-item, .existing-doctor-item {
+    border: 2px solid #000; /* Add more prominent border to each item */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px; /* Add border radius for a smoother look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to make them pop out */
+    background-color: #f8f8f8; /* Light background color for better contrast */
+  }
+  
+  .existing-class-item h3, .existing-class-item p, .existing-doctor-item h3, .existing-doctor-item p {
+    margin: 0;
+  }

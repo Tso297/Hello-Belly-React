@@ -4,7 +4,6 @@
   height: 100vh;
   font-family: 'Arial', sans-serif;
   color: black;
-  overflow: hidden; /* Ensure no scrolling */
 }
 
 /* Navbar */

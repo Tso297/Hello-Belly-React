@@ -101,7 +101,7 @@ const ClassCalendar = () => {
         style={{ flexGrow: 1, width: '100%' }}
       />
       <Box className="calendar-legend" sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <span style={{ color: 'blue', marginRight: '10px' }}>■ Group Classes</span>
+        <span style={{ color: 'blue', marginRight: '-130px', marginTop: '20px' }}>■ Group Classes</span>
         <span style={{ color: 'purple' }}>■ Appointments</span>
       </Box>
     </Box>

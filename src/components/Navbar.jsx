@@ -40,6 +40,9 @@ const Navbar = () => {
         <Link className="navbar-link" to="/about">
           About
         </Link>
+        <Link className="navbar-link" to="/GroupClasses">
+          Group Classes
+        </Link>
         <Link className="navbar-link" to="/Dashboard">
           Dashboard
         </Link>
@@ -48,14 +51,11 @@ const Navbar = () => {
             Messaging
           </Link>
         )}
-        <Link className="navbar-link" to="/AddClasses">
-          Add Classes
-        </Link>
         {user && user.email === "torcsh30@gmail.com" && (
           <>
             {" "}
-            <Link className="navbar-link" to="/admin/onboard">
-              Onboard Doctor
+            <Link className="navbar-link" to="/Admin">
+              Admin Page
             </Link>
           </>
         )}
