@@ -1,8 +1,60 @@
 .doctor-dashboard {
-    padding: 40px;
-    background-color: #f0f8ff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 500px; /* Move the whole dashboard to the right */
-  }
+  margin-top: 80px;
+  margin-left: 360px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: "Arial", sans-serif;
+  color: black;
+  padding: 0 100px;
+  /* width: 70%; */
+}
+
+.doctor-dashboard-button,
+.doctor-dashboard-signout-button {
+  border-radius: 50px;
+  background-color: #007bff;
+  color: white;
+}
+
+.doctor-dashboard-button:hover,
+.doctor-dashboard-signout-button:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+  align-self: start;
+}
+
+input {
+  padding: 10px 5px;
+}
+
+.doctor-dashboard-form-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #c3c7f3;
+}
