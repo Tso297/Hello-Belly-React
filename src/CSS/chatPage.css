@@ -214,6 +214,7 @@ h4.chatSubject {
   border-radius: 10px;
   padding: 20px;
   background-color: white;
+  color: black;
 }
 
 .chatDetail {
