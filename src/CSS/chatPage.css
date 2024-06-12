@@ -1,4 +1,3 @@
-/* General Container */
 .container {
   margin-left: 500px;
   display: flex;
@@ -6,22 +5,15 @@
   gap: 20px;
   width: 100%;
   max-width: 1200px;
-  align-items: center; /* Center child elements horizontally */
-  justify-content: center; /* Center child elements vertically */
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   box-sizing: border-box;
-  margin-top: 60px; /* Adjust based on your navbar height */
 }
 
-/* Chat Section Styling */
-.newChat,
-.chats {
-  flex: 1;
-  min-width: 300px;
-  border: 1px solid #eeeffc;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: white;
+.newChat {
+  text-align: center;
+  padding: 0;
 }
 
 ul {
@@ -39,7 +31,7 @@ li {
 }
 
 li:hover {
-  background-color: #eeeffc;
+  background-color: #f0f8ff;
 }
 
 .chatHeader {
@@ -61,18 +53,6 @@ li:hover {
   color: #666;
 }
 
-/* Selected Chat Section */
-.selectedChat {
-  flex: 1;
-  min-width: 400px;
-  border: 1px solid #eeeffc;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: white;
-  text-align: center;
-}
-
-/* Chat History */
 .chatHistory {
   display: flex;
   flex-direction: column;
@@ -91,20 +71,20 @@ li:hover {
 }
 
 .messageBubble.sent {
-  background-color: #897dae;
+  background-color: #007bff;
   color: white;
   align-self: flex-end;
 }
 
 .messageBubble.received {
-  background-color: #c3c7f3;
+  background-color: #f0f8ff;
   align-self: flex-start;
 }
 
 .messageTimestamp {
   font-size: 0.8em;
   margin-top: 5px;
-  color: #999; /* Default color */
+  color: #999;
   text-align: right;
 }
 
@@ -116,7 +96,6 @@ li:hover {
   color: #666666;
 }
 
-/* Form Styling */
 form {
   display: flex;
   flex-direction: column;
@@ -138,8 +117,15 @@ form textarea {
   min-height: 100px;
 }
 
+input {
+  outline: none;
+}
+input:focus {
+  border-color: #007bff;
+}
+
 form textarea:focus {
-  border-color: #c3c7f3;
+  border-color: #007bff;
 }
 
 .messageInput {
@@ -149,15 +135,15 @@ form textarea:focus {
 form button[type="submit"] {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
-  background-color: #545fdd;
+  border-radius: 50px;
+  background-color: #007bff;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 form button[type="submit"]:hover {
-  background-color: #4750ba;
+  background-color: #0056b3;
 }
 
 .sendButton {
@@ -167,13 +153,11 @@ form button[type="submit"]:hover {
 .deleteButton,
 .backButton {
   display: inline-block;
-  background-color: #545fdd;
+  background-color: #007bff;
   padding-top: 10px;
   margin-top: 10px;
-  /* margin-left: 5px;
-  margin-right: 5px; */
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   color: white;
   cursor: pointer;
   text-align: center;
@@ -182,23 +166,23 @@ form button[type="submit"]:hover {
 }
 
 .deleteButton {
-  background-color: #545fdd;
+  background-color: #007bff;
   margin-left: 5px;
   margin-right: 0;
 }
 
 .deleteButton:hover {
-  background-color: #4750ba;
+  background-color: #0056b3;
 }
 
 .backButton {
-  background-color: #545fdd;
+  background-color: #007bff;
   margin-right: 5px;
   margin-left: 0;
 }
 
 .backButton:hover {
-  background-color: #4750ba;
+  background-color: #0056b3;
 }
 
 /* Headings */
@@ -214,4 +198,64 @@ h4.chatSubject {
 
 .userSearchContainer {
   text-align: center;
+}
+
+.chatContainer {
+  display: flex;
+  gap: 10px;
+  margin-left: 360px;
+}
+
+.chats {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+}
+
+.chatDetail {
+  flex: 2;
+  border: 1px solid #eeeffc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.selectedChat {
+  flex: 1;
+  text-align: center;
+}
+
+.title {
+  margin-right: 150px;
+  justify-self: start;
+}
+.returnToDashButton {
+  margin-left: 150px;
+  justify-self: end;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+}
+
+.returnToDashButton:hover {
+  background-color: #0056b3;
+}
+
+.topContainer {
+  text-align: center;
+  display: flex;
+  margin-left: 400px;
+  margin-bottom: 30px;
 }

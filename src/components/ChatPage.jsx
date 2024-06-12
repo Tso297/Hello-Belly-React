@@ -16,7 +16,7 @@ import { Firebase } from "../firebase";
 import { useAuth } from "./AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchUsers from "./SearchUsers";
-import "./chatPage.css";
+import "../CSS/chatPage.css";
 
 const db = getFirestore(Firebase);
 
@@ -209,95 +209,113 @@ const ChatPage = () => {
     navigate("/chat");
   };
 
+  const handleReturnToDash = () => {
+    navigate("/Dashboard");
+  };
+
   if (!user) return null; // Prevent rendering if user is null
 
   return (
-    <div className="container">
-      {selectedChat ? (
-        <div className="selectedChat">
-          <h3>Chat with {selectedChat.otherUserName}</h3>
-          <h4 className="chatSubject">{selectedChat.subject}</h4>
-          <ul className="chatHistory">
-            {messages.map((message) => (
-              <li
-                key={message.id}
-                className={`messageBubble ${
-                  user && message.senderId === user.uid ? "sent" : "received"
-                }`}
-              >
-                <div>{message.message}</div>
-                <div className="messageTimestamp">
-                  {new Date(message.timestamp.seconds * 1000).toLocaleString()}
-                </div>
-              </li>
-            ))}
-            <div ref={messagesEndRef} />
-          </ul>
-          <form onSubmit={handleSendMessage}>
-            {!selectedChat.subject && (
-              <input
-                type="text"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                placeholder="Subject"
-                required
-              />
-            )}
-            <textarea
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message here..."
-              required
-              className="messageInput"
-            ></textarea>
-            <button type="submit">Send Message</button>
-          </form>
-          <button className="backButton" onClick={handleBackToInbox}>
-            Back to Inbox
-          </button>
-          <button
-            className="deleteButton"
-            onClick={() => handleDeleteChat(selectedChat.id)}
-          >
-            Delete Conversation
-          </button>
-        </div>
-      ) : (
-        <>
+    <>
+      <div className="topContainer">
+        <h2 className="title">Messages</h2>
+        <button className="returnToDashButton" onClick={handleReturnToDash}>
+          Return to Dashboard
+        </button>
+      </div>
+
+      <div className="chatContainer">
+        <div className="chats">
           <div className="newChat">
-            <h3>New chat with...</h3>
             <SearchUsers onSelectUser={handleSelectUser} />
           </div>
-          <div className="chats">
-            <h3>Chats</h3>
-            <ul>
-              {chats.map((chat) => {
-                const chatDate = new Date(chat.timestamp.seconds * 1000);
-                const isToday =
-                  chatDate.toDateString() === new Date().toDateString();
+          <ul>
+            {chats.map((chat) => {
+              const chatDate = new Date(chat.timestamp.seconds * 1000);
+              const isToday =
+                chatDate.toDateString() === new Date().toDateString();
 
-                return (
-                  <li key={chat.id} onClick={() => handleSelectChat(chat)}>
-                    <div className="chatHeader">
-                      <div className="chatSender">{chat.otherUserName}</div>
-                      <span className="chatTime">
-                        {isToday
-                          ? chatDate.toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                          : chatDate.toLocaleDateString()}
-                      </span>
+              return (
+                <li key={chat.id} onClick={() => handleSelectChat(chat)}>
+                  <div className="chatHeader">
+                    <div className="chatSender">{chat.otherUserName}</div>
+                    <span className="chatTime">
+                      {isToday
+                        ? chatDate.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : chatDate.toLocaleDateString()}
+                    </span>
+                  </div>
+                  <span className="chatSubject">{chat.subject}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="chatDetail">
+          {selectedChat ? (
+            <div className="selectedChat">
+              <h3>Chat with {selectedChat.otherUserName}</h3>
+              <h4 className="chatSubject">{selectedChat.subject}</h4>
+              <ul className="chatHistory">
+                {messages.map((message) => (
+                  <li
+                    key={message.id}
+                    className={`messageBubble ${
+                      user && message.senderId === user.uid
+                        ? "sent"
+                        : "received"
+                    }`}
+                  >
+                    <div>{message.message}</div>
+                    <div className="messageTimestamp">
+                      {new Date(
+                        message.timestamp.seconds * 1000
+                      ).toLocaleString()}
                     </div>
-                    <span className="chatSubject">{chat.subject}</span>
                   </li>
-                );
-              })}
-            </ul>
-          </div>
-        </>
-      )}
-    </div>
+                ))}
+                <div ref={messagesEndRef} />
+              </ul>
+              <form onSubmit={handleSendMessage}>
+                {!selectedChat.subject && (
+                  <input
+                    type="text"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    placeholder="Subject"
+                    required
+                  />
+                )}
+                <textarea
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type your message here..."
+                  required
+                  className="messageInput"
+                ></textarea>
+                <button type="submit">Send Message</button>
+              </form>
+              <button className="backButton" onClick={handleBackToInbox}>
+                Close Chat
+              </button>
+              <button
+                className="deleteButton"
+                onClick={() => handleDeleteChat(selectedChat.id)}
+              >
+                Delete Conversation
+              </button>
+            </div>
+          ) : (
+            <div className="placeholder">
+              <h3>Select a chat to start messaging</h3>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
