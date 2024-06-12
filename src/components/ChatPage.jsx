@@ -209,11 +209,20 @@ const ChatPage = () => {
     navigate("/chat");
   };
 
+  const handleReturnToDash = () => {
+    navigate("/Dashboard");
+  };
+
   if (!user) return null; // Prevent rendering if user is null
 
   return (
     <>
-      <h2 className="title">Messages</h2>
+      <div className="topContainer">
+        <h2 className="title">Messages</h2>
+        <button className="returnToDashButton" onClick={handleReturnToDash}>
+          Return to Dashboard
+        </button>
+      </div>
 
       <div className="chatContainer">
         <div className="chats">
