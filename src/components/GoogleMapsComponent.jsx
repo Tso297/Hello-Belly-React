@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { fetchGoogleMapsApiKeyAndLoadScript } from '../utils/loadGoogleMaps';
 
 const containerStyle = {
-  width: '50vh',
-  height: '50vh',
+  width: '100%',
+  height: '100%',
 };
 
 const libraries = ['places'];
@@ -152,7 +152,7 @@ const GoogleMapsComponent = () => {
   }
 
   return (
-    <div className="google-maps-component">
+    <div className="google-maps-component" style={{ height: '100%', width: '100%' }}>
       <div className="google-maps-container" style={containerStyle} ref={mapRef}></div>
       {selectedPlace && (
         <div className="google-maps-selected-place" style={{ position: 'absolute', bottom: '10px', left: '10px', background: 'white', padding: '10px', borderRadius: '5px', color: 'black' }}>
@@ -198,4 +198,4 @@ const GoogleMapsComponent = () => {
   );
 };
   
-  export default GoogleMapsComponent;
+export default GoogleMapsComponent;

@@ -1,9 +1,13 @@
 import React from 'react';
+import '../CSS/Home.css';
 
 const Home = () => {
   return (
-    <div className="home-container">
-      <h1 className="home-title">Welcome to Hello Belly!</h1>
+    <div className="background">
+      <div className="content">
+        <div className="logo">Hello Belly!</div>
+        <div className="tagline">Your Pregnancy Companion</div>
+      </div>
     </div>
   );
 };

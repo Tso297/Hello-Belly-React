@@ -1,0 +1,99 @@
+.pregnancy-qa {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.pregnancy-qa-title {
+  text-align: center;
+  margin: 0;
+}
+
+.pregnancy-qa-input {
+  width: 50%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pregnancy-qa-ask-button {
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pregnancy-qa-ask-button:hover {
+  background-color: #0056b3;
+}
+
+.pregnancy-qa-answer-section {
+  margin-bottom: 20px;
+}
+
+.pregnancy-qa-answer-title {
+  margin: 0;
+  text-align: center;
+}
+
+.pregnancy-qa-answer {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.pregnancy-qa-chat-log {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+
+.pregnancy-qa-chat-entry {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.pregnancy-qa-videos-section {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+.pregnancy-qa-video {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pregnancy-qa-video-title {
+  margin: 0;
+  font-size: 10px;
+  width: 200px;
+  height: auto;
+  white-space: normal;
+}
+
+.pregnancy-qa-video-iframe {
+  width: 200px;
+  height: 150px;
+}
