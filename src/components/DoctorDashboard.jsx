@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useZoom } from './ZoomContext';
-import "../CSS/DoctorDashboard.css"
+import { useZoom } from "./ZoomContext";
+import "../CSS/DoctorDashboard.css";
 
 const DoctorDashboard = () => {
   const { user, handleSignOut, doctorId } = useZoom();
@@ -130,6 +130,7 @@ const DoctorDashboard = () => {
       return;
     }
 
+    
     const timeOffData = {
       date: timeOffStartDate.toISOString(),
       end_date: timeOffEndDate.toISOString(),
