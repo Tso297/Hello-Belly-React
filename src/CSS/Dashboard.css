@@ -111,7 +111,7 @@
   gap: 10px;
   position: absolute;
   top: 10%;
-  left: 18%;
+  left: 68%;
   transform: translateY(-50%);
 }
 
@@ -122,10 +122,10 @@
 }
 
 .legend-appointments {
-  background-color: purple;
+  background-color: pink;
 }
 
-.legend-classes {
+.appointments-marker {
   background-color: blue;
 }
 

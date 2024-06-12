@@ -61,7 +61,7 @@ const PregnancyQA = () => {
 
   return (
     <div className="pregnancy-qa">
-      <h2 className="pregnancy-qa-title">Resources</h2>
+      <h2 className="pregnancy-qa-title">Automated Chat & Videos</h2>
       <input
         className="pregnancy-qa-input"
         type="text"

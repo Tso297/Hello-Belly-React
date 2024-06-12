@@ -2,25 +2,107 @@
 
 /* Adjust the overall container */
 .class-calendar {
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Ensure it fills the available space */
-    width: 101%;  /* Ensure it fills the available width */
-  }
-  
-  /* Adjust the FullCalendar styling */
-  .fc {
-    width: 100%;
-    height: 100%;
-  }
-  
-  /* Adjust the height of the calendar boxes */
-  .fc-daygrid-day {
-    height: 60px; /* Adjust height to fit more weeks */
-  }
-  
-  /* Optional: Add some padding and box-shadow to the calendar boxes for better visuals */
-  .fc-daygrid-day-frame {
-    padding: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it fills the available space */
+  width: 101%;  /* Ensure it fills the available width */
+}
+
+/* Adjust the FullCalendar styling */
+.fc {
+  width: 100%;
+  height: 100%;
+}
+
+/* Adjust the height of the calendar boxes */
+.fc-daygrid-day {
+  height: 60px; /* Adjust height to fit more weeks */
+}
+
+/* Optional: Add some padding and box-shadow to the calendar boxes for better visuals */
+.fc-daygrid-day-frame {
+  padding: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for FullCalendar buttons */
+.fc .fc-button,
+.fc .fc-today-button {
+  background-color: #007bff; /* Your blue color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fc .fc-button:hover,
+.fc .fc-today-button:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+.fc .fc-button:focus,
+.fc .fc-today-button:focus {
+  box-shadow: none;
+}
+
+.fc .fc-button-primary:disabled,
+.fc .fc-today-button:disabled {
+  background-color: #e1e1e1;
+  color: #a1a1a1;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-today-button.fc-button-active {
+  background-color: #0056b3;
+}
+
+/* Adjust arrow button colors */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  background-color: #007bff; /* Your blue color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+/* Ensure buttons maintain consistent styles */
+.fc-button-group .fc-button {
+  margin-right: 4px; /* Adjust margin for spacing */
+}
+
+/* Custom styles for FullCalendar today button in month view */
+.fc .fc-dayGridMonth-view .fc-toolbar-chunk .fc-button.fc-today-button {
+  background-color: #007bff; /* Your blue color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fc .fc-dayGridMonth-view .fc-toolbar-chunk .fc-button.fc-today-button:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+/* Legend */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.calendar-legend span {
+  margin: 0 10px;
+  font-size: 14px;
+}

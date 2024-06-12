@@ -50,7 +50,7 @@ const ClassCalendar = () => {
               extendedProps: {
                 link: cls.link,
               },
-              color: 'blue', // Set color for classes
+              color: 'skyblue', // Set color for classes
             };
             eventsArray.push(event);
             nextDate.setDate(nextDate.getDate() + 7); // Increment by 7 days for weekly recurrence
@@ -78,7 +78,7 @@ const ClassCalendar = () => {
         extendedProps: {
           link: appt.link,
         },
-        color: 'purple', // Set color for appointments
+        color: 'pink', // Set color for appointments
       }));
       setEvents(prevEvents => [...prevEvents, ...appointmentEvents]);
     }
@@ -101,8 +101,8 @@ const ClassCalendar = () => {
         style={{ flexGrow: 1, width: '100%' }}
       />
       <Box className="calendar-legend" sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <span style={{ color: 'blue', marginRight: '-130px', marginTop: '20px' }}>■ Group Classes</span>
-        <span style={{ color: 'purple' }}>■ Appointments</span>
+        <span style={{ color: 'skyblue', marginRight: '-123px', marginTop: '20px' }}>■ Group Classes</span>
+        <span style={{ color: 'pink' }}>■ Appointments</span>
       </Box>
     </Box>
   );
