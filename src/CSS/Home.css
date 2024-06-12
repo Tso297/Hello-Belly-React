@@ -1,0 +1,30 @@
+.background {
+    background-image: url('https://res.cloudinary.com/dhgpf6985/image/upload/v1718038504/pregnant-woman-with-doctor-video-consultation-for-rpm-1024x536_jr5gy6.webp');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .content {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .logo {
+    font-size: 3em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+  
+  .tagline {
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }

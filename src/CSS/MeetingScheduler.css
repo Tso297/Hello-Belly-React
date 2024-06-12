@@ -1,24 +1,30 @@
 .meeting-scheduler {
-  margin-top: 80px;
-  margin-left: 360px;
-  /* display: flex; */
-  height: 100vh;
   font-family: "Arial", sans-serif;
   color: black;
   text-align: center;
-  padding: 0 100px;
-  width: 70%;
+  padding: 30px 100px;
+  width: 75%;
+}
+
+.meetingSchedulerButton {
+  color: white;
+  background-color: #007bff !important;
+}
+
+.meeting-scheduler-submit-button:hover {
+  background-color: #0056b3;
 }
 
 .cancel,
 .reschedule {
   border-radius: 50px;
-  background-color: #545fdd;
+  background-color: #007bff;
+  color: white;
 }
 
 .cancel:hover,
 .reschedule:hover {
-  background-color: #4750ba;
+  background-color: #0056b3;
 }
 
 .cancel {
@@ -42,4 +48,8 @@ select {
   padding: 0;
   margin-top: 20px;
   margin-bottom: 0;
+}
+
+.meeting-scheduler-appointment-item:hover {
+  background-color: #f0f8ff;
 }

@@ -106,6 +106,11 @@ const MeetingScheduler = () => {
         alert(
           `Meeting ${
             editingAppointment ? "updated" : "scheduled"
+          } successfully with ${data.appointment.doctor.name}!`
+        );
+        alert(
+          `Meeting ${
+            editingAppointment ? "updated" : "scheduled"
           } successfully with Dr. ${data.appointment.doctor.name}!`
         );
         setEditingAppointment(null);
@@ -231,17 +236,17 @@ const MeetingScheduler = () => {
           />
         </div>
         <div className="meeting-scheduler-form-group">
-          <label className="meeting-scheduler-label">Doctor:</label>
+          <label className="meeting-scheduler-label">Consultant:</label>
           <select
             className="meeting-scheduler-select"
             value={doctor}
             onChange={handleDoctorChange}
             required
           >
-            <option value="">Select a doctor</option>
+            <option value="">Select a consultant</option>
             {doctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                Dr. {doc.name}
+                {doc.name}
               </option>
             ))}
           </select>
@@ -266,7 +271,7 @@ const MeetingScheduler = () => {
             </>
           )}
         </div>
-        <button className="meeting-scheduler-submit-button" type="submit">
+        <button className="meetingSchedulerButton" type="submit">
           {editingAppointment ? "Update Meeting" : "Schedule Meeting"}
         </button>
       </form>
