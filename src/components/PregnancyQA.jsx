@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useZoom } from './ZoomContext';
+import '../CSS/PregnancyQA.css';
 
 const PregnancyQA = () => {
   const { user } = useZoom();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [videos, setVideos] = useState([]);
+  const [conversationLog, setConversationLog] = useState([]);
+  const chatEndRef = useRef(null);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -42,6 +45,7 @@ const PregnancyQA = () => {
         const data = await response.json();
         setAnswer(data.answer);
         console.log('Fetched answer:', data.answer);
+        setConversationLog([...conversationLog, { question, answer: data.answer }]);
       } else {
         const errorData = await response.json();
         console.error('Error fetching answer:', errorData);
@@ -51,9 +55,13 @@ const PregnancyQA = () => {
     }
   };
 
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [conversationLog]);
+
   return (
     <div className="pregnancy-qa">
-      <h2 className="pregnancy-qa-title">Resources</h2>
+      <h2 className="pregnancy-qa-title">Automated Chat & Videos</h2>
       <input
         className="pregnancy-qa-input"
         type="text"
@@ -62,9 +70,15 @@ const PregnancyQA = () => {
         placeholder="Ask a question about pregnancy"
       />
       <button className="pregnancy-qa-ask-button" onClick={handleAskQuestion}>Ask</button>
-      <div className="pregnancy-qa-answer-section">
-        <h3 className="pregnancy-qa-answer-title">Answer</h3>
-        <p className="pregnancy-qa-answer">{answer}</p>
+
+      <div className="pregnancy-qa-chat-log">
+        {conversationLog.map((log, index) => (
+          <div key={index} className="pregnancy-qa-chat-entry">
+            <p><strong>Q:</strong> {log.question}</p>
+            <p><strong>A:</strong> {log.answer}</p>
+          </div>
+        ))}
+        <div ref={chatEndRef} />
       </div>
       <div className="pregnancy-qa-videos-section">
         {videos.map((video) => (

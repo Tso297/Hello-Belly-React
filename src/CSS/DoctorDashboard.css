@@ -13,12 +13,13 @@
 .doctor-dashboard-button,
 .doctor-dashboard-signout-button {
   border-radius: 50px;
-  background-color: #545fdd;
+  background-color: #007bff;
+  color: white;
 }
 
 .doctor-dashboard-button:hover,
 .doctor-dashboard-signout-button:hover {
-  background-color: #4750ba;
+  background-color: #0056b3;
 }
 
 h2 {

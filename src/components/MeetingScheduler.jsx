@@ -93,7 +93,7 @@ const MeetingScheduler = () => {
 
       if (response.ok) {
         const data = await response.json();
-        alert(`Meeting ${editingAppointment ? 'updated' : 'scheduled'} successfully with Dr. ${data.appointment.doctor.name}!`);
+        alert(`Meeting ${editingAppointment ? 'updated' : 'scheduled'} successfully with ${data.appointment.doctor.name}!`);
         setEditingAppointment(null);
         setSelectedDate(null);
         setPurpose('');
@@ -206,12 +206,12 @@ const MeetingScheduler = () => {
           />
         </div>
         <div className="meeting-scheduler-form-group">
-          <label className="meeting-scheduler-label">Doctor:</label>
+          <label className="meeting-scheduler-label">Consultant:</label>
           <select className="meeting-scheduler-select" value={doctor} onChange={handleDoctorChange} required>
-            <option value="">Select a doctor</option>
+            <option value="">Select a consultant</option>
             {doctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                Dr. {doc.name}
+               {doc.name}
               </option>
             ))}
           </select>
@@ -247,7 +247,7 @@ const MeetingScheduler = () => {
             <li className="meeting-scheduler-appointment-item" key={appointment.id}>
               <p className="meeting-scheduler-appointment-date">Date and Time: {new Date(appointment.date).toLocaleString()}</p>
               <p className="meeting-scheduler-appointment-purpose">Purpose: {appointment.purpose}</p>
-              <p className="meeting-scheduler-appointment-doctor">Doctor: Dr. {appointment.doctor.name}</p>
+              <p className="meeting-scheduler-appointment-doctor">Consult: {appointment.doctor.name}</p>
               <p className="meeting-scheduler-appointment-link">Join Link: <a href={`https://meet.jit.si/${appointment.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
               <button className="meeting-scheduler-button" onClick={() => handleCancel(appointment.id)}>Cancel</button>
               <button className="meeting-scheduler-button" onClick={() => setRescheduleAppointmentId(appointment.id)}>Reschedule</button>
