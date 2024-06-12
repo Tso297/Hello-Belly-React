@@ -191,7 +191,7 @@ const Dashboard = () => {
                     <h3>{appointments[currentAppointmentIndex]?.title}</h3>
                     <p>Date and Time: {appointments[currentAppointmentIndex]?.date ? new Date(appointments[currentAppointmentIndex]?.date).toLocaleString() : 'N/A'}</p>
                     <p>Purpose: {appointments[currentAppointmentIndex]?.purpose}</p>
-                    <p>Doctor: Dr. {appointments[currentAppointmentIndex]?.doctor?.name}</p>
+                    <p>Consultant: {appointments[currentAppointmentIndex]?.doctor?.name}</p>
                     <p>Join Link: <a href={`https://meet.jit.si/${appointments[currentAppointmentIndex]?.id}`} target="_blank" rel="noopener noreferrer">Join Meeting</a></p>
                     <button onClick={() => handleCancel(appointments[currentAppointmentIndex]?.id)}>Cancel</button>
                     <button onClick={() => openRescheduleModal(appointments[currentAppointmentIndex])}>Reschedule</button>
