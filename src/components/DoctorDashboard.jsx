@@ -130,7 +130,7 @@ const DoctorDashboard = () => {
       return;
     }
 
-    
+
     const timeOffData = {
       date: timeOffStartDate.toISOString(),
       end_date: timeOffEndDate.toISOString(),
@@ -163,6 +163,7 @@ const DoctorDashboard = () => {
     }
   };
 
+  
   const handleCancel = async (id) => {
     try {
       const response = await fetch(
