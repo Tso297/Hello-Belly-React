@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AddClassForm from './AddClassForm';
+import { getFirestore, collection, addDoc } from "firebase/firestore"; // Import Firestore functions
+import { Firebase } from "../firebase"; // Import Firebase configuration
 import '../CSS/Admin.css';
+
+const db = getFirestore(Firebase); // Initialize Firestore
 
 const Admin = () => {
   const [doctors, setDoctors] = useState([]);
@@ -101,6 +105,7 @@ const AdminOnboard = ({ doctors, setDoctors, doctorToUpdate, setDoctorToUpdate, 
     const doctorData = { name, email };
 
     try {
+      // Save to ElephantSQL
       const response = await fetch('https://hello-belly-flask-1.onrender.com/api/admin/doctors?admin_email=torcsh30@gmail.com', {
         method: 'POST',
         headers: {
@@ -111,8 +116,29 @@ const AdminOnboard = ({ doctors, setDoctors, doctorToUpdate, setDoctorToUpdate, 
 
       if (response.ok) {
         const data = await response.json();
-        alert('Doctor created successfully');
+        alert('Doctor created successfully in ElephantSQL');
         setDoctors((prevDoctors) => [...prevDoctors, data]);
+
+        // Debugging step: log the id returned from ElephantSQL
+        console.log('ElephantSQL doctor id:', data.id);
+
+        // Ensure the id is defined before passing to Firebase
+        const doctorId = data.id || 'undefined-id';
+
+        // Save to Firebase
+        try {
+          const docRef = await addDoc(collection(db, "doctors"), {
+            name: doctorData.name,
+            email: doctorData.email,
+            id: doctorId // Use the id returned from ElephantSQL
+          });
+          console.log('Doctor created successfully in Firebase with ID:', docRef.id);
+          alert('Doctor created successfully in Firebase');
+        } catch (firebaseError) {
+          console.error('Error creating doctor in Firebase:', firebaseError);
+          alert('Error creating doctor in Firebase. Please check the console for details.');
+        }
+
         setName('');
         setEmail('');
       } else {

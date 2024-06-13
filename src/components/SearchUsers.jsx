@@ -3,7 +3,6 @@ import {
   getFirestore,
   collection,
   query,
-  where,
   getDocs,
 } from "firebase/firestore";
 import { Firebase } from "../firebase";
@@ -26,23 +25,38 @@ const SearchUsers = ({ onSelectUser }) => {
     const handleSearch = async () => {
       const lowercaseSearchTerm = searchTerm.toLowerCase();
 
+      // Query users collection
       const usersRef = collection(db, "users");
-      const q = query(usersRef);
-      const querySnapshot = await getDocs(q);
-      const users = [];
+      const usersQuery = query(usersRef);
+      const usersSnapshot = await getDocs(usersQuery);
 
-      querySnapshot.forEach((doc) => {
+      // Query doctors collection
+      const doctorsRef = collection(db, "doctors");
+      const doctorsQuery = query(doctorsRef);
+      const doctorsSnapshot = await getDocs(doctorsQuery);
+
+      const combinedResults = [];
+
+      usersSnapshot.forEach((doc) => {
         const userData = doc.data();
         const lowercaseName = userData.name ? userData.name.toLowerCase() : "";
         if (
           lowercaseName.includes(lowercaseSearchTerm) &&
           userData.uid !== user.uid // Exclude current user
         ) {
-          users.push({ id: doc.id, ...userData });
+          combinedResults.push({ id: doc.id, ...userData });
         }
       });
 
-      setResults(users);
+      doctorsSnapshot.forEach((doc) => {
+        const doctorData = doc.data();
+        const lowercaseName = doctorData.name ? doctorData.name.toLowerCase() : "";
+        if (lowercaseName.includes(lowercaseSearchTerm)) {
+          combinedResults.push({ id: doc.id, ...doctorData, role: 'doctor' });
+        }
+      });
+
+      setResults(combinedResults);
     };
 
     handleSearch();
@@ -59,7 +73,7 @@ const SearchUsers = ({ onSelectUser }) => {
       <ul>
         {results.map((resultUser) => (
           <li key={resultUser.id} onClick={() => onSelectUser(resultUser)}>
-            {resultUser.name} ({resultUser.role})
+            {resultUser.name} ({resultUser.role || 'user'})
           </li>
         ))}
       </ul>
