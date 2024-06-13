@@ -1,0 +1,31 @@
+/* Define the soft blue color */
+:root {
+    --soft-blue: #f0f8ff;
+  }
+  
+  /* Set the background color and fixed size for the meeting scheduler */
+  .meeting-scheduler {
+    background-color: var(--soft-blue); /* Use the soft blue color */
+    padding: 20px; /* Add padding for better spacing */
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add box-shadow for a subtle effect */
+    height: 500px; /* Set a fixed height */
+    width: 100%; /* Set a fixed width */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+  }
+  
+  .meeting-scheduler-button {
+    background-color: pink; /* Set button background color to soft blue */
+    color: black; /* Set text color to black for contrast */
+    border: 1px solid #0056b3; /* Add border with dark blue color */
+    padding: 10px 20px; /* Add padding for better spacing */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease; /* Add transition for background color */
+    margin-top: 10px; /* Add margin to separate buttons */
+  }
+  
+  .meeting-scheduler-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+  }

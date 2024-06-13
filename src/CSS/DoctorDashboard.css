@@ -1,51 +1,127 @@
+/* Overall Doctor Dashboard Styling */
 .doctor-dashboard {
-  margin-top: 80px;
-  margin-left: 360px;
+  margin-left: 180px; /* Left margin to compensate for the leftside navbar */
   display: flex;
   flex-direction: column;
   height: 100vh;
   font-family: "Arial", sans-serif;
   color: black;
-  padding: 0 100px;
-  /* width: 70%; */
+  padding: 20px;
+  box-sizing: border-box;
+  width: calc(147.5% - 180px); /* Span the entire page excluding the left margin */
+  background-color: #e6f2ff; /* Soft blue background for the page */
 }
 
-.doctor-dashboard-button,
-.doctor-dashboard-signout-button {
+/* Title Styling */
+.doctor-dashboard-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 3-Column Layout */
+.doctor-dashboard-columns {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Individual Column Styling */
+.doctor-dashboard-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  background-color: #ffe6e6; /* Soft pink background for the columns */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 80vh; /* Ensure columns are evenly spaced */
+  overflow-y: auto;
+}
+
+/* Section Title Styling */
+.doctor-dashboard-section-title {
+  margin-bottom: 10px;
+}
+
+/* File Uploader Styles */
+.file-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.file-uploader input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.file-uploader button {
+  padding: 10px 20px;
+  border: none;
   border-radius: 50px;
   background-color: #007bff;
   color: white;
+  cursor: pointer;
 }
 
-.doctor-dashboard-button:hover,
-.doctor-dashboard-signout-button:hover {
+.file-uploader button:hover {
   background-color: #0056b3;
 }
 
-h2 {
-  margin-bottom: 10px;
+/* Uploaded Files List */
+.doctor-dashboard-files-list {
+  list-style-type: none;
   padding: 0;
-}
-
-h3 {
   margin: 0;
-  padding: 0;
-  align-self: start;
 }
 
-input {
-  padding: 10px 5px;
+.doctor-dashboard-file-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: white; /* White background for the file items */
+  border: 2px solid #000; /* Dark and thick border */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to make them pop */
 }
 
+.doctor-dashboard-file-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.doctor-dashboard-file-item a:hover {
+  text-decoration: underline;
+}
+
+.doctor-dashboard-file-item button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.doctor-dashboard-file-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Form Group Styling */
 .doctor-dashboard-form-group {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
 }
 
-textarea {
+/* Input and Textarea Styling */
+input, textarea {
   padding: 10px;
   border: 1px solid lightgrey;
   border-radius: 5px;
@@ -57,4 +133,38 @@ textarea {
 input:focus,
 textarea:focus {
   border-color: #c3c7f3;
+}
+
+/* Appointments and Time Off List Styling */
+.doctor-dashboard-appointments-list,
+.doctor-dashboard-timeoffs-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doctor-dashboard-appointment-item,
+.doctor-dashboard-timeoff-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: white; /* White background for the appointment items */
+  border: 2px solid #000; /* Dark and thick border */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to make them pop */
+}
+
+/* Button Styling */
+.doctor-dashboard-button,
+.doctor-dashboard-signout-button {
+  border-radius: 50px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+}
+
+.doctor-dashboard-button:hover,
+.doctor-dashboard-signout-button:hover {
+  background-color: #0056b3;
 }

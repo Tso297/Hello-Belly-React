@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useZoom } from './ZoomContext';
+import '../CSS/MeetingScheduler.css'
 
 const MeetingScheduler = () => {
   const { user, handleSignOut, appointments, setAppointments } = useZoom();
@@ -274,7 +275,6 @@ const MeetingScheduler = () => {
           ))}
         </ul>
       )}
-      <button className="meeting-scheduler-signout-button" onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };
