@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "./AuthContext";
 import SearchUsers from "./SearchUsers";
-import FileUploader from "./FileUploader";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { firebaseConfig } from '.././firebase-config';
+import { initializeApp } from 'firebase/app';
 import '../CSS/Dashboard.css'; // Ensure this is correct
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 const ChatPage = () => {
   const { user } = useAuth();
@@ -11,10 +16,43 @@ const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [subject, setSubject] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [newFileName, setNewFileName] = useState('');
+  const [progress, setProgress] = useState(0);
   const messagesEndRef = useRef(null);
 
-  const handleFileUpload = async (filePath, fileName) => {
-    await addMessage(newMessage, filePath, fileName);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert('Please select a file first');
+      return;
+    }
+
+    const fileName = newFileName || selectedFile.name;
+    const storageRef = ref(storage, `uploads/${fileName}`);
+    const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      }, 
+      (error) => {
+        console.error('Error uploading file:', error);
+        alert('Error uploading file. Please check the console for details.');
+      }, 
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          addMessage(newMessage, downloadURL, fileName);
+          setSelectedFile(null);
+          setNewFileName('');
+          setProgress(0);
+        });
+      }
+    );
   };
 
   const addMessage = async (message, fileUrl = "", fileName = "") => {
@@ -171,7 +209,7 @@ const ChatPage = () => {
                 <div>{message.message}</div>
                 {message.fileUrl && (
                   <div>
-                    <a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="file-view">
+                    <a href={message.fileUrl} target="_blank" rel="noopener noreferrer" className="file-view soft-pink">
                       {message.fileName || "View File"}
                     </a>
                   </div>
@@ -205,8 +243,18 @@ const ChatPage = () => {
               className="messageInput"
             ></textarea>
             <button type="submit" className="submit-button">Send Message</button>
-            <FileUploader onFileUpload={handleFileUpload} />
           </form>
+          <div className="file-uploader">
+            <input type="file" onChange={handleFileChange} />
+            <input
+              type="text"
+              placeholder="New file name (optional)"
+              value={newFileName}
+              onChange={(e) => setNewFileName(e.target.value)}
+            />
+            <button onClick={handleUpload}>Upload</button>
+            {progress > 0 && <p>Progress: {progress}%</p>}
+          </div>
           <button className="deleteButton" onClick={() => handleDeleteChat(selectedChat.id)}>
             Delete Conversation
           </button>

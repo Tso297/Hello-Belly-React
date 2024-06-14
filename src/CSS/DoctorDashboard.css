@@ -8,7 +8,7 @@
   color: black;
   padding: 20px;
   box-sizing: border-box;
-  width: calc(147.5% - 180px); /* Span the entire page excluding the left margin */
+  width: calc(147.5% - 155px); /* Span the entire page excluding the left margin */
   background-color: #e6f2ff; /* Soft blue background for the page */
 }
 
@@ -41,6 +41,10 @@
 }
 
 /* Section Title Styling */
+.doctor-dashboard-section-title-upload {
+  margin-bottom: 10px;
+}
+
 .doctor-dashboard-section-title {
   margin-bottom: 10px;
 }
@@ -166,5 +170,14 @@ textarea:focus {
 
 .doctor-dashboard-button:hover,
 .doctor-dashboard-signout-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button, .rename-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.delete-button:hover, .rename-button:hover {
   background-color: #0056b3;
 }

@@ -3,13 +3,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useZoom } from "./ZoomContext";
 import "../CSS/DoctorDashboard.css";
-import FileUploader from './FileUploader';
-import Modal from 'react-modal';
-
-Modal.setAppElement('#root'); // Ensure you have an element with id 'root' in your HTML
+import Test from './Test'; // Import the Test component
 
 const DoctorDashboard = () => {
-  const { user, handleSignOut, doctorId } = useZoom();
+  const { user, doctorId } = useZoom();
   const [appointments, setAppointments] = useState([]);
   const [timeOffs, setTimeOffs] = useState([]);
   const [files, setFiles] = useState([]);
@@ -24,8 +21,7 @@ const DoctorDashboard = () => {
   const [rescheduleTimeOffId, setRescheduleTimeOffId] = useState(null);
   const [renameFileId, setRenameFileId] = useState(null);
   const [newFileName, setNewFileName] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileUrl, setSelectedFileUrl] = useState(null);
 
   useEffect(() => {
     if (user && doctorId) {
@@ -129,7 +125,7 @@ const DoctorDashboard = () => {
 
       if (response.ok) {
         alert('File deleted successfully');
-        setFiles((prevFiles) => prevFiles.filter(file => file.id !== fileId));
+        fetchDoctorFiles(doctorId);
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
@@ -299,37 +295,24 @@ const DoctorDashboard = () => {
   const maxTime = new Date();
   maxTime.setHours(17, 0, 0, 0);
 
-  const openModal = (file) => {
-    setSelectedFile(file);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedFile(null);
-  };
-
   return (
     <div className="doctor-dashboard">
       <h2 className="doctor-dashboard-title">Doctor Dashboard</h2>
       
       <div className="doctor-dashboard-columns">
         <div className="doctor-dashboard-column">
-          <h3 className="doctor-dashboard-section-title">Upload Files</h3>
-          <FileUploader onFileUpload={handleFileUpload} /> {/* Add the FileUploader component */}
-          
-          <h3 className="doctor-dashboard-section-title">Uploaded Files</h3>
-          {files.length === 0 ? (
-            <p className="doctor-dashboard-no-files">No files uploaded.</p>
-          ) : (
+          <h3 className="doctor-dashboard-section-title-upload">Upload Files</h3>
+          <Test /> {/* Use the Test component here */}
             <ul className="doctor-dashboard-files-list">
               {files.map((file) => (
-                <li key={file.id} className="doctor-dashboard-file-item">
-                  <span onClick={() => openModal(file)}>
+                <li key={file.file_path} className="doctor-dashboard-file-item">
+                  <a href={`/${file.file_path}`} target="_blank" rel="noopener noreferrer">
                     {file.filename}
-                  </span>
-                  <button onClick={() => handleDeleteFile(file.id)}>Delete</button>
-                  <button onClick={() => setRenameFileId(file.id)}>Rename</button>
+                  </a>
+                  <div className="doctor-dashboard-file-item-buttons">
+        <button onClick={() => handleDeleteFile(file.name)}>Delete</button>
+        <button onClick={() => setRenameFileId(file.name)}>Rename</button>
+      </div>
                   {renameFileId === file.id && (
                     <div>
                       <input
@@ -344,7 +327,6 @@ const DoctorDashboard = () => {
                 </li>
               ))}
             </ul>
-          )}
         </div>
 
         <div className="doctor-dashboard-column">
@@ -556,16 +538,6 @@ const DoctorDashboard = () => {
           )}
         </div>
       </div>
-
-      {selectedFile && (
-        <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
-          <div className="modal-content">
-            <h2>{selectedFile.filename}</h2>
-            <img src={`/${selectedFile.file_path}`} alt={selectedFile.filename} style={{ width: '100%' }} />
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };

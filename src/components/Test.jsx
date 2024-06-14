@@ -119,7 +119,7 @@ const FileUploader = ({ onFileUpload }) => {
     return (
       <div className="test-container">
         <FileUploader onFileUpload={handleFileUpload} />
-  
+        <h3 className="doctor-dashboard-section-title">Uploaded Files</h3>
         <ul className="file-list">
           {files.map((file) => (
             <li key={file.url} className="file-item">
