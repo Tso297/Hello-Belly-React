@@ -1,82 +1,69 @@
-import React, { useState, useEffect } from "react";
-import {
-  getFirestore,
-  collection,
-  query,
-  getDocs,
-} from "firebase/firestore";
-import { Firebase } from "../firebase";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "./AuthContext";
 import "../CSS/searchUsers.css";
-
-const db = getFirestore(Firebase);
 
 const SearchUsers = ({ onSelectUser }) => {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
+  const searchContainerRef = useRef(null);
 
   useEffect(() => {
-    if (!user || searchTerm.trim() === "") {
-      setResults([]);
-      return;
-    }
-
     const handleSearch = async () => {
+      if (!user || searchTerm.trim() === "") {
+        setResults([]);
+        return;
+      }
+
       const lowercaseSearchTerm = searchTerm.toLowerCase();
 
-      // Query users collection
-      const usersRef = collection(db, "users");
-      const usersQuery = query(usersRef);
-      const usersSnapshot = await getDocs(usersQuery);
-
-      // Query doctors collection
-      const doctorsRef = collection(db, "doctors");
-      const doctorsQuery = query(doctorsRef);
-      const doctorsSnapshot = await getDocs(doctorsQuery);
-
-      const combinedResults = [];
-
-      usersSnapshot.forEach((doc) => {
-        const userData = doc.data();
-        const lowercaseName = userData.name ? userData.name.toLowerCase() : "";
-        if (
-          lowercaseName.includes(lowercaseSearchTerm) &&
-          userData.uid !== user.uid // Exclude current user
-        ) {
-          combinedResults.push({ id: doc.id, ...userData });
-        }
-      });
-
-      doctorsSnapshot.forEach((doc) => {
-        const doctorData = doc.data();
-        const lowercaseName = doctorData.name ? doctorData.name.toLowerCase() : "";
-        if (lowercaseName.includes(lowercaseSearchTerm)) {
-          combinedResults.push({ id: doc.id, ...doctorData, role: 'doctor' });
-        }
-      });
-
-      setResults(combinedResults);
+      try {
+        const response = await fetch(`https://hello-belly-flask-1.onrender.com/api/search_users?term=${lowercaseSearchTerm}`);
+        const data = await response.json();
+        setResults(data.results);
+      } catch (error) {
+        console.error('Error searching users:', error);
+      }
     };
 
     handleSearch();
   }, [searchTerm, user]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setSearchTerm("");
+        setResults([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="userSearchContainer">
+    <div className="userSearchContainer" ref={searchContainerRef}>
       <input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          setResults([]);
+        }}
         placeholder="Search users..."
       />
-      <ul>
-        {results.map((resultUser) => (
-          <li key={resultUser.id} onClick={() => onSelectUser(resultUser)}>
-            {resultUser.name} ({resultUser.role || 'user'})
-          </li>
-        ))}
-      </ul>
+      {searchTerm && (
+        <ul>
+          {results.map((resultUser) => (
+            <li key={resultUser.id} onClick={() => onSelectUser(resultUser)}>
+              {resultUser.name || resultUser.email} ({resultUser.email})
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

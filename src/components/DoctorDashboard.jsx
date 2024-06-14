@@ -4,6 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useZoom } from "./ZoomContext";
 import "../CSS/DoctorDashboard.css";
 import FileUploader from './FileUploader';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root'); // Ensure you have an element with id 'root' in your HTML
 
 const DoctorDashboard = () => {
   const { user, handleSignOut, doctorId } = useZoom();
@@ -21,6 +24,8 @@ const DoctorDashboard = () => {
   const [rescheduleTimeOffId, setRescheduleTimeOffId] = useState(null);
   const [renameFileId, setRenameFileId] = useState(null);
   const [newFileName, setNewFileName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (user && doctorId) {
@@ -124,7 +129,7 @@ const DoctorDashboard = () => {
 
       if (response.ok) {
         alert('File deleted successfully');
-        fetchDoctorFiles(doctorId);
+        setFiles((prevFiles) => prevFiles.filter(file => file.id !== fileId));
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
@@ -294,6 +299,16 @@ const DoctorDashboard = () => {
   const maxTime = new Date();
   maxTime.setHours(17, 0, 0, 0);
 
+  const openModal = (file) => {
+    setSelectedFile(file);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFile(null);
+  };
+
   return (
     <div className="doctor-dashboard">
       <h2 className="doctor-dashboard-title">Doctor Dashboard</h2>
@@ -309,10 +324,10 @@ const DoctorDashboard = () => {
           ) : (
             <ul className="doctor-dashboard-files-list">
               {files.map((file) => (
-                <li key={file.file_path} className="doctor-dashboard-file-item">
-                  <a href={`/${file.file_path}`} target="_blank" rel="noopener noreferrer">
+                <li key={file.id} className="doctor-dashboard-file-item">
+                  <span onClick={() => openModal(file)}>
                     {file.filename}
-                  </a>
+                  </span>
                   <button onClick={() => handleDeleteFile(file.id)}>Delete</button>
                   <button onClick={() => setRenameFileId(file.id)}>Rename</button>
                   {renameFileId === file.id && (
@@ -541,8 +556,18 @@ const DoctorDashboard = () => {
           )}
         </div>
       </div>
+
+      {selectedFile && (
+        <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
+          <div className="modal-content">
+            <h2>{selectedFile.filename}</h2>
+            <img src={`/${selectedFile.file_path}`} alt={selectedFile.filename} style={{ width: '100%' }} />
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
 
-export default DoctorDashboard; 
+export default DoctorDashboard;

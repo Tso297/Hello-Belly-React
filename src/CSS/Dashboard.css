@@ -328,10 +328,12 @@
 }
 
 .carousel-button-left {
+  color: white;
   left: -50px;
 }
 
 .carousel-button-right {
+  color: white;
   right: -50px;
 }
 
@@ -504,8 +506,82 @@
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
-  width: 80%; /* Adjust the width as needed */
-  max-width: 800px; /* Adjust the max-width as needed */
+  width: 80%;
+  max-width: 800px;
+  max-height: 80%; /* Ensure the modal does not exceed 80% of the viewport height */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Hide overflow */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ChatPage Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffe6e6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80%; /* Ensure the modal does not exceed 80% of the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Use full width */
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #f0f8ff; /* Use the soft blue color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: calc(100% - 300px); /* Make modal content wider by 300px */
+  max-width: 1250px; /* Ensure the modal content has a max-width */
+  max-height: 80%; /* Ensure the modal does not exceed 80% of the viewport height */
+  display: flex;
+  flex-direction: column;
 }
 
 .close-button {
@@ -519,23 +595,28 @@
 /* ChatPage Styles */
 .chat-page {
   display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
-.chat-header {
+.chat-sidebar {
+  width: 30%; /* Increase the width */
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+
+.chat-log-container {
+  width: 35%; /* Adjust the width */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border-bottom: 1px solid #ccc;
+  flex-direction: column;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
 }
 
 .chat-log {
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* Enable vertical scrolling */
   padding: 10px;
+  height: 400px; /* Fixed height for the chat log */
 }
 
 .chat-entry {
@@ -554,24 +635,42 @@
   align-self: flex-start;
 }
 
+.chat-current {
+  width: 35%; /* Adjust the width */
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffe6e6; /* Use the soft pink color */
+  border-bottom: 1px solid #ccc;
+}
+
 .chat-input {
   display: flex;
+  flex-direction: column; /* Change to column to stack the input and button */
   padding: 10px;
   background-color: #f1f1f1;
   border-top: 1px solid #ccc;
+  margin-top: auto; /* Push the input to the bottom */
 }
 
-.chat-input input {
-  flex-grow: 1;
+.chat-input input,
+.chat-input textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-right: 10px;
+  margin-bottom: 10px; /* Add margin between inputs and button */
 }
 
 .chat-input button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #0056b3; /* Darker blue */
   color: white;
   border: none;
   border-radius: 5px;
@@ -579,5 +678,149 @@
 }
 
 .chat-input button:hover {
+  background-color: #003f7f;
+}
+
+.upload-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Make button wider */
+}
+
+.uploadButton:hover {
+  background-color: #0056b3;
+}
+
+.deleteButton {
+  padding: 10px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px; /* Add margin at the top */
+}
+
+.deleteButton:hover {
+  background-color: #c9302c;
+}
+
+/* SearchUsers Styles */
+.userSearchContainer {
+  text-align: center;
+}
+
+.userSearchContainer input {
+  padding: 14px 10px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+  width: 92%;
+}
+
+.userSearchContainer input:focus {
+  border-color: #c3c7f3;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+li:hover {
+  background-color: #f0f8ff;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.chatSender {
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+
+.chatTime {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.chatHistory {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.messageBubble {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  max-width: 80%;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.messageBubble.sent {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+.messageBubble.received {
+  background-color: #f0f8ff;
+  align-self: flex-start;
+}
+
+.messageTimestamp {
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #999;
+  text-align: right;
+}
+
+.messageBubble.sent .messageTimestamp {
+  color: #cccccc;
+}
+
+.messageBubble.received .messageTimestamp {
+  color: #666666;
+}
+
+.messageInput {
+  width: 98%;
+}
+
+.submit-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Make button wider */
+}
+
+.submit-button:hover {
   background-color: #0056b3;
 }

@@ -1,46 +1,43 @@
 import React, { useState } from 'react';
-import { useZoom } from './ZoomContext'; // Import your ZoomContext to get the doctorId
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from '.././firebase';
 
 const FileUploader = ({ onFileUpload }) => {
-  const { doctorId } = useZoom(); // Get doctorId from ZoomContext
   const [selectedFile, setSelectedFile] = useState(null);
   const [newFileName, setNewFileName] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = () => {
     if (!selectedFile) {
       alert('Please select a file first');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('doctor_id', doctorId); // Append doctor_id to formData
-    formData.append('new_file_name', newFileName); // Append new file name to formData
+    const storageRef = ref(storage, `uploads/${newFileName || selectedFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
-    try {
-      const response = await fetch('https://hello-belly-flask-1.onrender.com/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        onFileUpload(data.filePath);
-        alert('File uploaded successfully');
-        setSelectedFile(null);
-        setNewFileName('');
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error}`);
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      }, 
+      (error) => {
+        console.error('Error uploading file:', error);
+      }, 
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          onFileUpload(downloadURL);
+          alert('File uploaded successfully');
+          setSelectedFile(null);
+          setNewFileName('');
+          setProgress(0);
+        });
       }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Error uploading file. Please check the console for details.');
-    }
+    );
   };
 
   return (
@@ -53,6 +50,7 @@ const FileUploader = ({ onFileUpload }) => {
         onChange={(e) => setNewFileName(e.target.value)}
       />
       <button onClick={handleUpload}>Upload</button>
+      <div>Progress: {progress}%</div>
     </div>
   );
 };

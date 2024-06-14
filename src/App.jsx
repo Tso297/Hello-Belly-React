@@ -15,6 +15,7 @@ import ChatPage from "./components/ChatPage";
 import About from "./components/About";
 import GroupClasses from "./components/GroupClasses";
 import Admin from "./components/Admin";
+import Test from "./components/Test"
 
 function App() {
   const [meeting, setMeeting] = useState(null);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/AddClasses" element={<AddClassForm />} />
           <Route path="/GroupClasses" element={<GroupClasses />} />
           <Route path="/FAQ" element={<PregnancyQA />} />
+          <Route path="/Test" element={<Test />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/admin/onboard" element={<AdminOnboard />} />
           <Route path="/schedule" element={<MeetingScheduler />} />

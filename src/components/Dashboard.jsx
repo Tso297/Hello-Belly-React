@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import ClassCalendar from './ClassCalendar';
 import PregnancyQA from './PregnancyQA';
 import GoogleMapsComponent from './GoogleMapsComponent';
 import MeetingScheduler from './MeetingScheduler';
-import ChatPage from './ChatPage';
 import DatePicker from 'react-datepicker';
 import { useZoom } from './ZoomContext';
+import ChatPage from './ChatPage'; // Import ChatPage component
 import '../CSS/Dashboard.css';
 
 const Dashboard = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isRescheduleModalOpen, setRescheduleModalOpen] = useState(false);
+  const [isChatModalOpen, setChatModalOpen] = useState(false); // Add state for chat modal
   const { user, appointments, setAppointments } = useZoom();
   const [rescheduleAppointment, setRescheduleAppointment] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -20,12 +21,13 @@ const Dashboard = () => {
   const [currentAppointmentIndex, setCurrentAppointmentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('');
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const navigate = useNavigate();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const openChatModal = () => setChatModalOpen(true);
-  const closeChatModal = () => setChatModalOpen(false);
+  const openChatModal = () => setChatModalOpen(true); // Function to open chat modal
+  const closeChatModal = () => setChatModalOpen(false); // Function to close chat modal
 
   const openRescheduleModal = (appointment) => {
     setRescheduleAppointment(appointment);
@@ -229,14 +231,6 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-      {isChatModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close-button" onClick={closeChatModal}>&times;</span>
-            <ChatPage closeModal={closeChatModal} />
-          </div>
-        </div>
-      )}
       {isRescheduleModalOpen && rescheduleAppointment && (
         <div className="modal">
           <div className="modal-content">
@@ -281,6 +275,14 @@ const Dashboard = () => {
             </p>
           )}
           <button onClick={() => setSelectedPlace(null)}>Close</button>
+        </div>
+      )}
+      {isChatModalOpen && (
+        <div className="modal">
+          <div className="modal-content chat-modal">
+            <span className="close-button" onClick={closeChatModal}>&times;</span>
+            <ChatPage />
+          </div>
         </div>
       )}
     </div>
