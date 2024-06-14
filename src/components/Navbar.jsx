@@ -52,11 +52,6 @@ const Navbar = () => {
         <Link className="navbar-link" to="/Dashboard">
           Dashboard
         </Link>
-        {user && (
-          <Link className="navbar-link" to="/chat">
-            Messaging
-          </Link>
-        )}
         {user && user.email === "torcsh30@gmail.com" && (
           <Link className="navbar-link" to="/Admin">
             Admin Page
