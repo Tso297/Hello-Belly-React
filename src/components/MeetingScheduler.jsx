@@ -237,7 +237,7 @@ const MeetingScheduler = () => {
             </>
           )}
         </div>
-        <button className="meeting-scheduler-submit-button" type="submit">{editingAppointment ? 'Update Meeting' : 'Schedule Meeting'}</button>
+        <button className="meeting-scheduler-button" type="submit">{editingAppointment ? 'Update Meeting' : 'Schedule Meeting'}</button>
       </form>
       <h3 className="meeting-scheduler-upcoming-title">Upcoming Appointments</h3>
       {appointments.length === 0 ? (

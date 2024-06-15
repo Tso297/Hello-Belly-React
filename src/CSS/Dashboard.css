@@ -828,3 +828,7 @@ li:hover {
 .file-view {
   color: #ffb6c1; /* Soft pink color */
 }
+
+.meeting-scheduler-submit-button {
+  background-color: pink;
+}
